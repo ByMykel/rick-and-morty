@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="relative text-gray-600 w-5/6">
+    <div class="relative text-gray-600 w-5/6 max-w-6xl">
       <input
         type="text"
         v-model="searchText"

@@ -2,7 +2,7 @@
   <div class="max-w-screen-2xl">
     <Spinner :show="loading" />
     <div v-if="!loading && !error && character">
-      <h1 class="w-10/12 absolute top-2 text-purple-700 font-bold truncate">
+      <h1 class="w-10/12 absolute top-2 font-bold truncate">
         {{ character.name }}
       </h1>
       <div class="w-full flex justify-center flex-col md:flex-row">
@@ -18,7 +18,7 @@
       <div class="pt-3">
         <h1 class="text-center">Episodes ({{ character.episode.length }})</h1>
         <div
-          class="text-center mx-auto shadow-md bg-blue-400 m-2 h-auto md:h-10 flex w-auto md:w-4/5 justify-center items-center rounded-sm border-2 border-blue-500"
+          class="text-white text-center mx-auto shadow-md bg-blue-500 m-2 h-auto md:h-10 flex w-auto md:w-4/5 justify-center items-center rounded-md"
           v-for="episode of episodes"
           :key="episode.id"
         >

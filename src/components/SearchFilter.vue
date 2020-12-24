@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-5/6 mx-auto bg-white shadow-md mt-2 rounded-md flex flex-col items-center"
+    class="w-5/6 mx-auto bg-white shadow-md mt-2 rounded-md flex flex-col items-center max-w-6xl"
   >
     <div class="md:flex">
       <div class="text-center px-3">
@@ -12,7 +12,7 @@
             :selected="selectedStatus"
             :name="tag"
             event="statusChanged"
-            color="red"
+            bgcolor="bg-red-500"
             >{{ tag }}</FilterTag
           >
         </div>
@@ -26,7 +26,7 @@
             :selected="selectedGender"
             :name="tag"
             event="genderChanged"
-            color="blue"
+            bgcolor="bg-blue-500"
             >{{ tag }}</FilterTag
           >
         </div>

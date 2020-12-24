@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-200 py-5 pb-12">
+  <div class="py-5 pb-12">
     <Modal
       :showing="showModal"
       @close="showModal = false"
@@ -19,7 +19,7 @@
       :selectedStatus="status"
       :selectedGender="gender"
     />
-    <div class="flex flex-wrap justify-center p-3">
+    <div class="flex flex-wrap justify-center max-w-6xl mx-auto pt-3">
       <CharacterCard
         v-for="character in characters"
         :key="character.id"

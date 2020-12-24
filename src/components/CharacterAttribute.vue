@@ -1,8 +1,8 @@
 <template>
-  <div class="text-lg" v-if="value">
+  <h1 class="text-lg" v-if="value">
     {{ name }}:
-    <span class="text-red-500">{{ value }}</span>
-  </div>
+    <span class="text-blue-500">{{ value }}</span>
+  </h1>
 </template>
 
 <script>
