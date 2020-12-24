@@ -2,7 +2,7 @@
   <div class="max-w-screen-2xl">
     <Spinner :show="loading" />
     <div v-if="!loading && !error && character">
-      <h1 class="w-10/12 absolute top-2 font-bold truncate">
+      <h1 class="w-4/5 absolute top-2 font-bold truncate">
         {{ character.name }}
       </h1>
       <div class="w-full flex justify-center flex-col md:flex-row">
