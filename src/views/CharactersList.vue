@@ -23,10 +23,7 @@
       <CharacterCard
         v-for="character in characters"
         :key="character.id"
-        :id="character.id"
-        :name="character.name"
-        :image="character.image"
-        :status="character.status"
+        :character="character"
         @showCharacter="(characterId = $event), (showModal = true)"
       />
       <div
@@ -34,19 +31,13 @@
         v-observe-visibility="handleScrolledToBottom"
       ></div>
     </div>
-    <half-circle-spinner
-      :animation-duration="1500"
-      :size="50"
-      color="gray"
-      v-show="loading && !error"
-      class="mx-auto pt-2"
-    />
+    <Spinner :show="loading && !error" />
     <div class="text-center" v-show="error">No Results</div>
   </div>
 </template>
 
 <script>
-import { HalfCircleSpinner } from "epic-spinners";
+import Spinner from "@/components/Spinner.vue";
 import Modal from "@/components/Modal.vue";
 import SearchInput from "@/components/SearchInput.vue";
 import SearchFilter from "@/components/SearchFilter.vue";
@@ -62,7 +53,7 @@ export default {
     SearchInput,
     SearchFilter,
     CharacterCard,
-    HalfCircleSpinner,
+    Spinner,
   },
   data() {
     return {

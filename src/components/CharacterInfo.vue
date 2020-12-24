@@ -1,12 +1,6 @@
 <template>
   <div class="max-w-screen-2xl">
-    <half-circle-spinner
-      :animation-duration="1500"
-      :size="50"
-      color="gray"
-      v-show="loading"
-      class="mx-auto mt-32"
-    />
+    <Spinner :show="loading" />
     <div v-if="!loading && !error && character">
       <h1 class="w-10/12 absolute top-2 text-purple-700 font-bold truncate">
         {{ character.name }}
@@ -18,25 +12,17 @@
           alt=""
         />
         <div class="pl-3 text-center md:text-left">
-          <CharacterAttribute name="Status" :value="character.status" />
-          <CharacterAttribute name="Species" :value="character.species" />
-          <CharacterAttribute name="Type" :value="character.type" />
-          <CharacterAttribute name="Gender" :value="character.gender" />
-          <CharacterAttribute name="Origin" :value="character.origin.name" />
-          <CharacterAttribute
-            name="Location"
-            :value="character.location.name"
-          />
+          <CharacterAttributeList :character="character" />
         </div>
       </div>
       <div class="pt-3">
         <h1 class="text-center">Episodes ({{ character.episode.length }})</h1>
-        <div v-for="episode of episodes" :key="episode.id">
-          <div
-            class="text-center mx-auto shadow-md bg-blue-400 m-2 h-auto md:h-10 flex w-auto md:w-4/5 justify-center items-center rounded-sm border-2 border-blue-500"
-          >
-            {{ episode.id }}. {{ episode.name }}
-          </div>
+        <div
+          class="text-center mx-auto shadow-md bg-blue-400 m-2 h-auto md:h-10 flex w-auto md:w-4/5 justify-center items-center rounded-sm border-2 border-blue-500"
+          v-for="episode of episodes"
+          :key="episode.id"
+        >
+          {{ episode.id }}. {{ episode.name }}
         </div>
       </div>
     </div>
@@ -45,8 +31,8 @@
 </template>
 
 <script>
-import { HalfCircleSpinner } from "epic-spinners";
-import CharacterAttribute from "@/components/CharacterAttribute.vue";
+import Spinner from "@/components/Spinner.vue";
+import CharacterAttributeList from "@/components/CharacterAttributeList.vue";
 import axios from "axios";
 
 export default {
@@ -55,8 +41,8 @@ export default {
     id: Number,
   },
   components: {
-    CharacterAttribute,
-    HalfCircleSpinner,
+    CharacterAttributeList,
+    Spinner,
   },
   data() {
     return {
