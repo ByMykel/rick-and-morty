@@ -20,7 +20,7 @@
                     Episodes ({{ character.episode.length }})
                 </h1>
                 <div
-                    class="text-white text-center mx-auto shadow-md bg-blue-500 m-2 h-auto md:h-10 flex w-auto md:w-4/5 justify-center items-center rounded-md"
+                    class="text-white text-center mx-auto shadow-md bg-blue-500 m-2 p-2 h-auto md:h-10 flex w-auto md:w-4/5 justify-center items-center rounded-md"
                     v-for="episode of episodes"
                     :key="episode.id"
                 >
