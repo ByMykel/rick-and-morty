@@ -1,17 +1,17 @@
 <template>
-  <div id="app">
-    <CharactersList />
-  </div>
+    <div id="app">
+        <CharactersList />
+    </div>
 </template>
 
 <script>
 import CharactersList from "./views/CharactersList.vue";
 
 export default {
-  name: "App",
-  components: {
-    CharactersList,
-  },
+    name: "App",
+    components: {
+        CharactersList,
+    },
 };
 </script>
 
