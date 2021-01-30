@@ -9,12 +9,12 @@
             <CharacterInfo :id="characterId" />
         </Modal>
         <SearchInput
-            @fetchData="(filters.name = $event), fetch(1)"
+            @fetchData="(filters.name = $event), fetch()"
             @toggleFilter="showFilter = !showFilter"
         />
         <SearchFilter
-            @statusChanged="(filters.status = $event), fetch(1)"
-            @genderChanged="(filters.gender = $event), fetch(1)"
+            @statusChanged="(filters.status = $event), fetch()"
+            @genderChanged="(filters.gender = $event), fetch()"
             v-show="showFilter"
             :selectedStatus="filters.status"
             :selectedGender="filters.gender"

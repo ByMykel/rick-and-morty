@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-screen-2xl">
         <Spinner :show="loading" />
-        <div v-if="!loading && !error && character">
+        <div v-if="!loading && character">
             <h1 class="w-4/5 absolute top-2 font-bold truncate">
                 {{ character.name }}
             </h1>
@@ -28,7 +28,6 @@
                 </div>
             </div>
         </div>
-        <div class="text-center" v-show="error">No Results</div>
     </div>
 </template>
 
@@ -54,7 +53,6 @@ export default {
             character: null,
             episodes: [],
             loading: false,
-            error: false,
         };
     },
     mounted() {
