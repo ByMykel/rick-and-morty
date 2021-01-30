@@ -3,14 +3,15 @@
         class="bg-white h-72 w-60 sm:w-52 m-2 rounded-md shadow text-center hover:shadow-2xl cursor-pointer"
         @click="$emit('showCharacter', character.id)"
     >
+        <div
+            class="w-15 h-1 flex justify-center items-center rounded-t-md"
+            :class="bgcolor"
+        ></div>
         <img
-            class="h-48 sm:40 w-full rounded-t-md object-cover"
+            class="h-48 sm:40 w-full object-cover rounded-b-sm"
             :src="character.image"
         />
-        <div class="w-15 h-5 flex justify-center items-center" :class="bgcolor">
-            {{ character.status }}
-        </div>
-        <div class="p-1 text-md text-black font-medium">
+        <div class="p-1 text-md font-medium">
             {{ character.name }}
         </div>
     </div>
