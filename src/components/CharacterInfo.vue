@@ -1,32 +1,31 @@
 <template>
-    <div class="max-w-screen-2xl">
+    <div class="max-w-screen-2xl pb-24">
         <Spinner :show="loading" />
         <div v-if="!loading && character">
-            <h1 class="w-4/5 absolute top-2 font-bold truncate">
+            <img
+                class="w-7 absolute top-2 rounded-full shadow-md"
+                :src="character.image"
+                alt=""
+            />
+            <h1 class="w-4/5 absolute top-2 left-16 truncate">
                 {{ character.name }}
             </h1>
-            <div class="w-full flex justify-center flex-col md:flex-row">
-                <img
-                    class="w-52 rounded-md shadow-md mx-auto md:mx-0"
-                    :src="character.image"
-                    alt=""
-                />
-                <div class="pl-3 text-center md:text-left">
-                    <CharacterAttributeList :character="character" />
-                </div>
+
+            <div class="w-11/12 mx-auto pt-3">
+                <h1>Information</h1>
+                <p>General information about the character.</p>
             </div>
-            <div class="pt-3">
-                <h1 class="text-center">
-                    Episodes ({{ character.episode.length }})
-                </h1>
-                <div
-                    class="text-white text-center mx-auto shadow-md bg-blue-500 m-2 p-2 h-auto md:h-10 flex w-auto md:w-4/5 justify-center items-center rounded-md"
-                    v-for="episode of episodes"
-                    :key="episode.id"
-                >
-                    {{ episode.id }}. {{ episode.name }}
-                </div>
+            <CharacterAttributeList :character="character" />
+
+            <div class="w-11/12 mx-auto pt-3">
+                <h1>Episodes</h1>
+                <p>All the episodes where the character appears.</p>
             </div>
+            <EpisodeCard
+                v-for="episode in episodes"
+                :key="episode.id"
+                :episode="episode"
+            />
         </div>
     </div>
 </template>
@@ -34,6 +33,7 @@
 <script>
 import Spinner from "@/components/Spinner.vue";
 import CharacterAttributeList from "@/components/CharacterAttributeList.vue";
+import EpisodeCard from "@/components/EpisodeCard.vue";
 
 import { RepositoryFactory } from "./../repositories/RepositoryFactory";
 const CharactersRepository = RepositoryFactory.get("characters");
@@ -47,6 +47,7 @@ export default {
     components: {
         CharacterAttributeList,
         Spinner,
+        EpisodeCard,
     },
     data() {
         return {
