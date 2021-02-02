@@ -7,7 +7,7 @@
                 :src="character.image"
                 alt=""
             />
-            <h1 class="w-4/5 absolute top-2 left-16 truncate">
+            <h1 class="w-4/6 sm:w-5/6 absolute top-2 left-16 truncate">
                 {{ character.name }}
             </h1>
 

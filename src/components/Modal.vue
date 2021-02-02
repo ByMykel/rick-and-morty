@@ -13,20 +13,7 @@
                 class="absolute top-1 right-0 my-1 mx-2"
                 @click.prevent="close"
             >
-                <svg
-                    class="w-7 h-7"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                    ></path>
-                </svg>
+                <Icons class="text-black" icon="cross" />
             </button>
             <div class="overflow-auto max-h-screen w-full">
                 <slot />
@@ -36,6 +23,8 @@
 </template>
 
 <script>
+import Icons from "@/components/Icons.vue";
+
 export default {
     name: "Modal",
     props: {
@@ -51,6 +40,9 @@ export default {
             type: Boolean,
             default: true,
         },
+    },
+    components: {
+        Icons,
     },
     watch: {
         showing(value) {
