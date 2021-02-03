@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-5/6 mx-auto bg-white shadow-md mt-2 rounded-md flex flex-col items-center max-w-6xl"
+        class="w-5/6 mx-auto bg-white shadow mt-2 rounded-md flex flex-col items-center max-w-6xl border border-gray-200"
     >
         <div class="md:flex">
             <div class="text-center px-3">

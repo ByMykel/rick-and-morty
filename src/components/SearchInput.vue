@@ -6,7 +6,7 @@
                 v-model="searchText"
                 @keyup="$emit('fetchData', searchText)"
                 placeholder="Search by name"
-                class="bg-white h-10 w-full px-10 pr-10 rounded-full text-sm focus:outline-none shadow-sm"
+                class="bg-white h-10 w-full px-10 pr-10 rounded-full text-sm focus:outline-none shadow focus:border-gray-700 border border-gray-200"
             />
             <button
                 type="submit"
