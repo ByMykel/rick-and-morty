@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-100 rounded-md w-11/12 mx-auto m-1 shadow">
+    <div class="bg-gray-50 rounded-md w-11/12 mx-auto m-1 shadow">
         <div
             class="bg-white cursor-pointer p-2 flex justify-between"
             :class="[show ? 'rounded-t-md' : 'rounded-md']"
