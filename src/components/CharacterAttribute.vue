@@ -1,7 +1,7 @@
 <template>
-    <div class="bg-gray-700 m-1 rounded-md p-2 w-11/12 mx-auto" v-if="value">
-        <h2 class="text-white">{{ name }}</h2>
-        <p class="text-white">{{ value }}</p>
+    <div class="bg-white m-1 rounded-md p-2 w-11/12 mx-auto shadow" v-if="value">
+        <h2>{{ name }}</h2>
+        <p>{{ value }}</p>
     </div>
 </template>
 
