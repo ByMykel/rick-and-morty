@@ -1,6 +1,6 @@
 <template>
     <div
-        class="bg-white h-72 w-60 sm:w-52 m-2 rounded-md shadow text-center hover:shadow-2xl cursor-pointer"
+        class="bg-white h-72 w-36 sm:w-48 md:w-52 m-2 rounded-md shadow text-center hover:shadow-2xl cursor-pointer"
         @click="$emit('showCharacter', character.id)"
     >
         <div
