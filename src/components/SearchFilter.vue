@@ -1,41 +1,16 @@
 <template>
-    <div
-        class="w-5/6 mx-auto bg-white shadow mt-2 rounded-md flex flex-col items-center max-w-6xl border border-gray-200"
-    >
-        <div class="md:flex">
-            <div class="text-center px-3">
-                <h1>Status</h1>
-                <div class="block">
-                    <FilterTag
-                        v-for="(tag, index) in ['alive', 'dead', 'unknown']"
-                        :key="index"
-                        :selected="selectedStatus"
-                        :name="tag"
-                        event="statusChanged"
-                        bgcolor="bg-red-500"
-                        >{{ tag }}</FilterTag
-                    >
-                </div>
-            </div>
-            <div class="text-center">
-                <h1>Gender</h1>
-                <div class="block">
-                    <FilterTag
-                        v-for="(tag, index) in [
-                            'female',
-                            'male',
-                            'genderless',
-                            'unknown',
-                        ]"
-                        :key="index"
-                        :selected="selectedGender"
-                        :name="tag"
-                        event="genderChanged"
-                        bgcolor="bg-blue-500"
-                        >{{ tag }}</FilterTag
-                    >
-                </div>
-            </div>
+    <div class="mx-auto mt-2 max-w-6xl w-full sm:px-6 lg:px-8">
+        <div>
+            <FilterTag
+                name="Status"
+                :options="['alive', 'dead', 'unknown']"
+                event="statusChanged"
+            />
+            <FilterTag
+                name="Gender"
+                :options="['female', 'male', 'genderless', 'unknown']"
+                event="genderChanged"
+            />
         </div>
     </div>
 </template>

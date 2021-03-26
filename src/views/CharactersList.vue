@@ -19,17 +19,21 @@
             :selectedStatus="filters.status"
             :selectedGender="filters.gender"
         />
-        <div class="flex flex-wrap justify-center max-w-6xl mx-auto pt-3">
-            <CharacterCard
-                v-for="character in characters"
-                :key="character.id"
-                :character="character"
-                @showCharacter="(characterId = $event), (showModal = true)"
-            />
+        <div class="mt-6 max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div
-                v-if="characters.length"
-                v-observe-visibility="handleScrolledToBottom"
-            ></div>
+                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2"
+            >
+                <CharacterCard
+                    v-for="character in characters"
+                    :key="character.id"
+                    :character="character"
+                    @showCharacter="(characterId = $event), (showModal = true)"
+                />
+                <div
+                    v-if="characters.length"
+                    v-observe-visibility="handleScrolledToBottom"
+                ></div>
+            </div>
         </div>
         <Spinner :show="loading" />
     </div>

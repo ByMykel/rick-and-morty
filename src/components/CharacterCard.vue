@@ -1,16 +1,19 @@
 <template>
     <div
-        class="bg-white h-72 w-36 sm:w-48 md:w-52 m-2 rounded-md shadow text-center hover:shadow-2xl cursor-pointer"
+        class="bg-white h-72 rounded-md shadow text-center hover:shadow-2xl cursor-pointer relative overflow-hidden"
         @click="$emit('showCharacter', character.id)"
     >
         <div
-            class="w-15 h-1 flex justify-center items-center rounded-t-md"
-            :class="bgcolor"
+            class="top-0 text-xs right-0 absolute font-medium text-white px-3 py-1 rounded-bl-md"
+            :class="genderColor"
+        >
+            {{ character.gender }}
+        </div>
+        <img class="h-48 sm:40 w-full object-cover" :src="character.image" />
+        <div
+            class="w-15 h-1 flex justify-center items-center"
+            :class="statusColor"
         ></div>
-        <img
-            class="h-48 sm:40 w-full object-cover rounded-b-sm"
-            :src="character.image"
-        />
         <div class="p-1 text-md font-medium">
             {{ character.name }}
         </div>
@@ -24,12 +27,20 @@ export default {
         character: Object,
     },
     computed: {
-        bgcolor() {
+        statusColor() {
             return {
                 Alive: "bg-green-400",
                 Dead: "bg-red-400",
                 unknown: "bg-yellow-400",
             }[this.character.status];
+        },
+        genderColor() {
+            return {
+                Male: "bg-blue-500",
+                Female: "bg-purple-500",
+                Genderless: "bg-gray-500",
+                unknown: "bg-yellow-500",
+            }[this.character.gender];
         },
     },
 };
