@@ -10,12 +10,10 @@
         </Modal>
         <SearchInput
             @fetchData="(filters.name = $event), fetch()"
-            @toggleFilter="showFilter = !showFilter"
         />
         <SearchFilter
             @statusChanged="(filters.status = $event), fetch()"
             @genderChanged="(filters.gender = $event), fetch()"
-            v-show="showFilter"
             :selectedStatus="filters.status"
             :selectedGender="filters.gender"
         />
@@ -68,7 +66,6 @@ export default {
                 last: 1,
             },
             loading: false,
-            showFilter: false,
             filters: {
                 name: "",
                 status: "",
