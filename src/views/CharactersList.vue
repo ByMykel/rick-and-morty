@@ -8,16 +8,19 @@
         >
             <CharacterInfo :id="characterId" />
         </Modal>
-        <SearchInput
-            @fetchData="(filters.name = $event), fetch()"
-        />
+        <SearchInput @fetchData="(filters.name = $event), fetch()" />
         <SearchFilter
             @statusChanged="(filters.status = $event), fetch()"
             @genderChanged="(filters.gender = $event), fetch()"
             :selectedStatus="filters.status"
             :selectedGender="filters.gender"
         />
-        <div class="mt-6 max-w-6xl mx-auto sm:px-6 lg:px-8">
+        <div
+            v-if="showMessage"
+            class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8"
+            v-html="message"
+        ></div>
+        <div class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div
                 class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2"
             >
@@ -61,6 +64,7 @@ export default {
     data() {
         return {
             characters: [],
+            numberCharacters: 0,
             page: {
                 actual: 1,
                 last: 1,
@@ -77,6 +81,70 @@ export default {
     },
     mounted() {
         this.fetch();
+    },
+    computed: {
+        showMessage() {
+            return true;
+        },
+        message() {
+            if (
+                this.filters.name &&
+                this.filters.status &&
+                this.filters.gender
+            ) {
+                return `${this.numberCharacters} results for <span class="font-medium">${this.filters.status}</span> characters matching <span class="font-medium">${this.filters.name}</span> with <span class="font-medium">${this.filters.gender}</span> gender`;
+            }
+
+            if (
+                this.filters.name &&
+                this.filters.status &&
+                !this.filters.gender
+            ) {
+                return `${this.numberCharacters} results for <span class="font-medium">${this.filters.status}</span> characters matching <span class="font-medium">${this.filters.name}</span>`;
+            }
+
+            if (
+                this.filters.name &&
+                !this.filters.status &&
+                this.filters.gender
+            ) {
+                return `${this.numberCharacters} results for characters matching <span class="font-medium">${this.filters.name}</span> with <span class="font-medium">${this.filters.gender}</span> gender`;
+            }
+
+            if (
+                !this.filters.name &&
+                this.filters.status &&
+                this.filters.gender
+            ) {
+                return `${this.numberCharacters} results for <span class="font-medium">${this.filters.status}</span> characters with <span class="font-medium">${this.filters.gender}</span> gender`;
+            }
+
+            if (
+                this.filters.name &&
+                !this.filters.status &&
+                !this.filters.gender
+            ) {
+                return `${this.numberCharacters} results for characters matching <span class="font-medium">${this.filters.name}</span>`;
+            }
+
+            if (
+                !this.filters.name &&
+                !this.filters.status &&
+                this.filters.gender
+            ) {
+                return `${this.numberCharacters} results for characters with <span class="font-medium">${this.filters.gender}</span> gender`;
+            }
+
+            if (
+                !this.filters.name &&
+                this.filters.status &&
+                !this.filters.gender
+            ) {
+                return `${this.numberCharacters} results for <span class="font-medium">${this.filters.status}</span> characters`;
+            }
+
+            return "";
+        },
     },
     methods: {
         handleScrolledToBottom(isVisible) {
@@ -110,9 +178,11 @@ export default {
 
                 this.characters.push(...data.data.results);
                 this.page.last = data.data.info.pages;
+                this.numberCharacters = data.data.info.count;
                 this.loading = false;
             } catch {
                 this.characters = [];
+                this.numberCharacters = 0;
                 this.loading = false;
             }
         },
