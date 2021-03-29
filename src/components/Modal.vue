@@ -1,7 +1,8 @@
 <template>
     <div
         v-if="showing"
-        class="fixed inset-0 w-full h-screen flex items-center justify-center bg-black bg-opacity-80 z-50"
+        class="fixed inset-0 w-full h-screen flex items-center justify-center z-50"
+        :class="{ 'bg-black bg-opacity-40 duration-500': bgColorDelay }"
         @click.self="closeIfShown"
     >
         <div
@@ -41,16 +42,27 @@ export default {
             default: true,
         },
     },
+    data() {
+        return {
+            bgColorDelay: false,
+        };
+    },
     components: {
         Icons,
     },
     watch: {
         showing(value) {
             if (value) {
+                setTimeout(() => {
+                    this.bgColorDelay = true;
+                }, 290);
                 return document
                     .querySelector("body")
                     .classList.add("overflow-hidden");
             }
+
+            this.bgColorDelay = false;
+
             return document
                 .querySelector("body")
                 .classList.remove("overflow-hidden");

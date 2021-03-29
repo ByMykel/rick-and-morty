@@ -5,6 +5,7 @@
         color="gray"
         v-show="show"
         class="mx-auto pt-2"
+        :class="classes"
     />
 </template>
 
@@ -15,6 +16,7 @@ export default {
     name: "Spinner",
     props: {
         show: Boolean,
+        classes: String,
     },
     components: {
         HalfCircleSpinner,

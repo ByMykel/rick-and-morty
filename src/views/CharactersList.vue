@@ -1,13 +1,22 @@
 <template>
     <div class="py-5 pb-12">
-        <Modal
-            :showing="showModal"
-            @close="showModal = false"
-            :showClose="true"
-            :backgroundClose="true"
+        <transition
+            enter-active-class="transition ease-out duration-300"
+            leave-active-class="transition ease-in duration-75"
+            enter-class="transform opacity-0 -translate-y-32"
+            enter-to-class="transform opacity-100 translate-y-0"
+            leave-class="transform opacity-100 translate-y-0"
+            leave-to-class="transform opacity-0 -translate-y-32"
         >
-            <CharacterInfo :id="characterId" />
-        </Modal>
+            <Modal
+                :showing="showModal"
+                @close="showModal = false"
+                :showClose="true"
+                :backgroundClose="true"
+            >
+                <CharacterInfo :id="characterId" />
+            </Modal>
+        </transition>
         <SearchInput @fetchData="(filters.name = $event), fetch()" />
         <SearchFilter
             @statusChanged="(filters.status = $event), fetch()"

@@ -1,6 +1,6 @@
 <template>
     <div class="max-w-screen-2xl pb-24">
-        <Spinner :show="loading" />
+        <Spinner :show="loading" :classes="'mt-40'" />
         <div v-if="!loading && character">
             <img
                 class="w-7 absolute top-2 rounded-full shadow-md"
