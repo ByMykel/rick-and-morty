@@ -1,9 +1,9 @@
 <template>
-    <div class="max-w-screen-2xl pb-24">
+    <div class="mx-auto max-w-screen-2xl pb-24">
         <Spinner :show="loading" :classes="'mt-40'" />
         <div v-if="!loading && character">
             <img
-                class="w-7 absolute top-2 rounded-full shadow-md"
+                class="w-7 absolute top-2 left-6 rounded-full shadow-md"
                 :src="character.image"
                 alt=""
             />
