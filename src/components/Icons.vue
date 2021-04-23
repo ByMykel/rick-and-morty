@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="icon === 'chevron-down'">
+        <div v-if="icon === 'chevron-down'" key="chevron-down">
             <svg
                 class="w-6 h-6"
                 fill="none"
@@ -16,7 +16,8 @@
                 ></path>
             </svg>
         </div>
-        <div v-else-if="icon === 'chevron-up'">
+
+        <div v-else-if="icon === 'chevron-up'" key="chevron-up">
             <svg
                 class="w-6 h-6"
                 fill="none"
@@ -32,7 +33,8 @@
                 ></path>
             </svg>
         </div>
-        <div v-else-if="icon === 'cross'">
+
+        <div v-else-if="icon === 'cross'" key="cross">
             <svg
                 class="w-7 h-7"
                 fill="none"
@@ -48,7 +50,8 @@
                 ></path>
             </svg>
         </div>
-        <div v-else-if="icon === 'search'">
+
+        <div v-else-if="icon === 'search'" key="search">
             <svg
                 class="w-6 h-6"
                 fill="none"
@@ -64,7 +67,8 @@
                 ></path>
             </svg>
         </div>
-        <div v-else-if="icon === 'adjustments'">
+
+        <div v-else-if="icon === 'adjustments'" key="adjustments">
             <svg
                 class="h-6 w-6"
                 fill="none"
@@ -80,7 +84,11 @@
                 ></path>
             </svg>
         </div>
-        <div v-else-if="icon === 'chevron-down-dropdown'">
+
+        <div
+            v-else-if="icon === 'chevron-down-dropdown'"
+            key="chevron-down-dropdown"
+        >
             <svg
                 class="-mr-1 ml-2 h-5 w-5"
                 xmlns="http://www.w3.org/2000/svg"
@@ -101,6 +109,7 @@
 <script>
 export default {
     name: "Icons",
+
     props: {
         icon: String,
     },

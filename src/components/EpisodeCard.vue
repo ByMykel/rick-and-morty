@@ -1,14 +1,15 @@
 <template>
     <div class="bg-gray-50 rounded-md w-11/12 mx-auto m-1 shadow">
         <div
-            class="bg-white cursor-pointer p-2 flex justify-between"
             :class="[show ? 'rounded-t-md' : 'rounded-md']"
+            class="bg-white cursor-pointer p-2 flex justify-between"
             @click="show = !show"
         >
-            <h2>{{ episode.name }}</h2>
+            <h3>{{ episode.name }}</h3>
+
             <div class="flex items-center">
-                <Icons v-if="show" icon="chevron-up" />
-                <Icons v-else icon="chevron-down" />
+                <icons v-if="show" key="chevron-up" icon="chevron-up"></icons>
+                <icons v-else key="chevron-down" icon="chevron-down"></icons>
             </div>
         </div>
 
@@ -25,17 +26,21 @@ import Icons from "@/components/Icons.vue";
 
 export default {
     name: "EpisodeCard",
+
+    components: {
+        Icons,
+    },
+
     props: {
         episode: Object,
     },
+
     data() {
         return {
             show: false,
         };
     },
-    components: {
-        Icons,
-    },
+
     computed: {
         seasonAndEpisode() {
             const season = parseInt(this.episode.episode.match(/S(\d+)/).pop());

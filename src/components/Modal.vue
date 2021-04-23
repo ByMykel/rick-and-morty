@@ -1,8 +1,8 @@
 <template>
     <div
         v-if="showing"
-        class="fixed inset-0 w-full h-screen flex items-center justify-center z-50"
         :class="{ 'bg-black bg-opacity-40 duration-500': bgColorDelay }"
+        class="fixed inset-0 w-full h-screen flex items-center justify-center z-50"
         @click.self="closeIfShown"
     >
         <div
@@ -10,12 +10,12 @@
         >
             <button
                 v-if="showClose"
-                aria-label="close"
                 class="absolute top-1 right-0 my-1 mx-2"
                 @click.prevent="close"
             >
-                <Icons class="text-black" icon="cross" />
+                <icons class="text-black" icon="cross"></icons>
             </button>
+
             <div class="overflow-auto max-h-screen w-full">
                 <slot />
             </div>
@@ -28,28 +28,34 @@ import Icons from "@/components/Icons.vue";
 
 export default {
     name: "Modal",
+
+    components: {
+        Icons,
+    },
+
     props: {
         showing: {
             required: true,
             type: Boolean,
         },
+
         showClose: {
             type: Boolean,
             default: true,
         },
+
         backgroundClose: {
             type: Boolean,
             default: true,
         },
     },
+
     data() {
         return {
             bgColorDelay: false,
         };
     },
-    components: {
-        Icons,
-    },
+
     watch: {
         showing(value) {
             if (value) {
@@ -68,10 +74,12 @@ export default {
                 .classList.remove("overflow-hidden");
         },
     },
+
     methods: {
         close() {
             this.$emit("close");
         },
+
         closeIfShown() {
             if (this.showClose && this.backgroundClose) {
                 this.close();

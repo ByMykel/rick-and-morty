@@ -8,44 +8,52 @@
             leave-class="transform opacity-100 translate-y-0"
             leave-to-class="transform opacity-0 -translate-y-32"
         >
-            <Modal
+            <modal
                 :showing="showModal"
-                @close="showModal = false"
                 :showClose="true"
                 :backgroundClose="true"
+                @close="showModal = false"
             >
-                <CharacterInfo :id="characterId" />
-            </Modal>
+                <character-info :id="characterId"></character-info>
+            </modal>
         </transition>
-        <SearchInput @fetchData="(filters.name = $event), fetch()" />
-        <SearchFilter
-            @statusChanged="(filters.status = $event), fetch()"
-            @genderChanged="(filters.gender = $event), fetch()"
-            :selectedStatus="filters.status"
-            :selectedGender="filters.gender"
-        />
+
+        <search-input
+            @fetch-data="(filters.name = $event), fetch()"
+        ></search-input>
+
+        <search-filter
+            :selected-status="filters.status"
+            :selected-gender="filters.gender"
+            @status-changed="(filters.status = $event), fetch()"
+            @gender-changed="(filters.gender = $event), fetch()"
+        ></search-filter>
+
         <div
             v-if="showMessage"
-            class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8"
+            class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8 break-words"
             v-html="message"
         ></div>
+
         <div class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div
                 class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2"
             >
-                <CharacterCard
+                <character-card
                     v-for="character in characters"
                     :key="character.id"
                     :character="character"
-                    @showCharacter="(characterId = $event), (showModal = true)"
-                />
+                    @show-character="(characterId = $event), (showModal = true)"
+                ></character-card>
+
                 <div
                     v-if="characters.length"
                     v-observe-visibility="handleScrolledToBottom"
                 ></div>
             </div>
         </div>
-        <Spinner :show="loading" />
+
+        <spinner :show="loading"></spinner>
     </div>
 </template>
 
@@ -62,6 +70,7 @@ const CharactersRepository = RepositoryFactory.get("characters");
 
 export default {
     name: "CharactersList",
+
     components: {
         Modal,
         CharacterInfo,
@@ -70,6 +79,7 @@ export default {
         CharacterCard,
         Spinner,
     },
+
     data() {
         return {
             characters: [],
@@ -88,13 +98,12 @@ export default {
             showModal: false,
         };
     },
-    mounted() {
-        this.fetch();
-    },
+
     computed: {
         showMessage() {
             return true;
         },
+
         message() {
             if (
                 this.filters.name &&
@@ -155,6 +164,11 @@ export default {
             return "";
         },
     },
+
+    mounted() {
+        this.fetch();
+    },
+
     methods: {
         handleScrolledToBottom(isVisible) {
             if (!isVisible) {
@@ -165,6 +179,7 @@ export default {
 
             this.fetch(this.page.actual);
         },
+
         async fetch(page = 1) {
             if (page > this.page.last) {
                 return;
@@ -173,6 +188,7 @@ export default {
             if (page === 1) {
                 this.page.actual = 1;
                 this.characters = [];
+                this.numberCharacters = 0;
             }
 
             this.loading = true;
@@ -188,10 +204,10 @@ export default {
                 this.characters.push(...data.data.results);
                 this.page.last = data.data.info.pages;
                 this.numberCharacters = data.data.info.count;
-                this.loading = false;
             } catch {
                 this.characters = [];
                 this.numberCharacters = 0;
+            } finally {
                 this.loading = false;
             }
         },

@@ -1,19 +1,22 @@
 <template>
     <div
         class="bg-white h-72 rounded-md shadow text-center hover:shadow-2xl cursor-pointer relative overflow-hidden"
-        @click="$emit('showCharacter', character.id)"
+        @click="$emit('show-character', character.id)"
     >
         <div
-            class="top-0 text-xs right-0 absolute font-medium text-white px-3 py-1 rounded-bl-md"
             :class="genderColor"
+            class="top-0 text-xs right-0 absolute font-medium text-white px-3 py-1 rounded-bl-md"
         >
             {{ character.gender }}
         </div>
+
         <img class="h-48 sm:40 w-full object-cover" :src="character.image" />
+
         <div
-            class="w-15 h-1 flex justify-center items-center"
             :class="statusColor"
+            class="w-15 h-1 flex justify-center items-center"
         ></div>
+
         <div class="p-1 text-md font-medium">
             {{ character.name }}
         </div>
@@ -23,9 +26,11 @@
 <script>
 export default {
     name: "CharacterCard",
+
     props: {
         character: Object,
     },
+
     computed: {
         statusColor() {
             return {
@@ -34,6 +39,7 @@ export default {
                 unknown: "bg-yellow-400",
             }[this.character.status];
         },
+
         genderColor() {
             return {
                 Male: "bg-blue-500",

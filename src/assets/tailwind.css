@@ -16,4 +16,8 @@
     @apply text-lg;
     @apply font-semibold;
   }
+
+  h3 {
+    @apply font-medium;
+  }
 }
