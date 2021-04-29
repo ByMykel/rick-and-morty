@@ -6,7 +6,7 @@
         @click.self="closeIfShown"
     >
         <div
-            class="relative md:h-4/5 h-5/6 max-h-5/6 md:w-2/3 w-11/12 bg-gray-200 shadow-lg rounded-lg p-6 pt-10 flex"
+            class="relative md:h-4/5 h-5/6 max-h-5/6 md:w-2/3 w-11/12 bg-gray-200 shadow-lg rounded-lg pt-10 flex"
         >
             <button
                 v-if="showClose"
