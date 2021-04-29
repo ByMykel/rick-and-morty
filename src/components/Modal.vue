@@ -16,7 +16,7 @@
                 <icons class="text-black" icon="cross"></icons>
             </button>
 
-            <div class="overflow-auto max-h-screen w-full">
+            <div class="overflow-auto max-h-screen w-full no-scrollbar">
                 <slot />
             </div>
         </div>
