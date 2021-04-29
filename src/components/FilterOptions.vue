@@ -1,29 +1,29 @@
 <template>
     <div class="mx-auto mt-2 max-w-6xl w-full sm:px-6 lg:px-8">
         <div>
-            <filter-tag
+            <dropdown
                 name="Status"
                 :options="['alive', 'dead', 'unknown']"
                 event="status-changed"
-            ></filter-tag>
+            ></dropdown>
 
-            <filter-tag
+            <dropdown
                 name="Gender"
                 :options="['female', 'male', 'genderless', 'unknown']"
                 event="gender-changed"
-            ></filter-tag>
+            ></dropdown>
         </div>
     </div>
 </template>
 
 <script>
-import FilterTag from "@/components/FilterTag.vue";
+import Dropdown from "@/components/Dropdown.vue";
 
 export default {
     name: "SearchFilter",
 
     components: {
-        FilterTag,
+        Dropdown,
     },
 
     props: {

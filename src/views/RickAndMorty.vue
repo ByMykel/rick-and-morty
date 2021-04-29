@@ -18,16 +18,14 @@
             </modal>
         </transition>
 
-        <search-input
-            @fetch-data="(filters.name = $event), fetch()"
-        ></search-input>
+        <search-bar @fetch-data="(filters.name = $event), fetch()"></search-bar>
 
-        <search-filter
+        <filter-options
             :selected-status="filters.status"
             :selected-gender="filters.gender"
             @status-changed="(filters.status = $event), fetch()"
             @gender-changed="(filters.gender = $event), fetch()"
-        ></search-filter>
+        ></filter-options>
 
         <div
             v-if="showMessage"
@@ -60,12 +58,12 @@
 <script>
 import Spinner from "@/components/Spinner.vue";
 import Modal from "@/components/Modal.vue";
-import SearchInput from "@/components/SearchInput.vue";
-import SearchFilter from "@/components/SearchFilter.vue";
+import SearchBar from "@/components/SearchBar.vue";
+import FilterOptions from "@/components/FilterOptions.vue";
 import CharacterCard from "@/components/CharacterCard.vue";
 import CharacterInfo from "@/components/CharacterInfo.vue";
 
-import { RepositoryFactory } from "./../repositories/RepositoryFactory";
+import { RepositoryFactory } from "../repositories/RepositoryFactory";
 const CharactersRepository = RepositoryFactory.get("characters");
 
 export default {
@@ -74,8 +72,8 @@ export default {
     components: {
         Modal,
         CharacterInfo,
-        SearchInput,
-        SearchFilter,
+        SearchBar,
+        FilterOptions,
         CharacterCard,
         Spinner,
     },

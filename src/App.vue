@@ -1,16 +1,16 @@
 <template>
     <div id="app">
-        <CharactersList />
+        <RickAndMorty />
     </div>
 </template>
 
 <script>
-import CharactersList from "./views/CharactersList.vue";
+import RickAndMorty from "./views/RickAndMorty.vue";
 
 export default {
     name: "App",
     components: {
-        CharactersList,
+        RickAndMorty,
     },
 };
 </script>
