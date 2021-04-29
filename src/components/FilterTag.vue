@@ -8,9 +8,7 @@
             >
                 <span>{{ name }}:</span>
 
-                <span class="font-bold pl-1">
-                    {{ selected ? selected : "All" }}
-                </span>
+                <span class="font-bold pl-1" v-text="selected"> </span>
 
                 <icons icon="chevron-down-dropdown"></icons>
             </button>
@@ -48,9 +46,8 @@
                             (show = false),
                             $parent.$emit(event, selected)
                     "
-                >
-                    {{ tag }}
-                </div>
+                    v-text="tag"
+                ></div>
             </div>
         </transition>
     </div>
@@ -74,7 +71,7 @@ export default {
 
     data() {
         return {
-            selected: "",
+            selected: "All",
             show: false,
         };
     },

@@ -6,9 +6,8 @@
         <div
             :class="genderColor"
             class="top-0 text-xs right-0 absolute font-medium text-white px-3 py-1 rounded-bl-md"
-        >
-            {{ character.gender }}
-        </div>
+            v-text="character.gender"
+        ></div>
 
         <img class="h-48 sm:40 w-full object-cover" :src="character.image" />
 
@@ -17,9 +16,7 @@
             class="w-15 h-1 flex justify-center items-center"
         ></div>
 
-        <div class="p-1 text-md font-medium">
-            {{ character.name }}
-        </div>
+        <div class="p-1 text-md font-medium" v-text="character.name"></div>
     </div>
 </template>
 

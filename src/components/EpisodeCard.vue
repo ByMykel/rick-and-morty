@@ -5,7 +5,7 @@
             class="bg-white cursor-pointer p-2 flex justify-between"
             @click="show = !show"
         >
-            <h3>{{ episode.name }}</h3>
+            <h3 v-text="episode.name"></h3>
 
             <div class="flex items-center">
                 <icons v-if="show" key="chevron-up" icon="chevron-up"></icons>
@@ -14,9 +14,9 @@
         </div>
 
         <div v-show="show" class="p-2 border-gray-200 border-t">
-            <div>{{ seasonAndEpisode }}</div>
-            <div>Number of characters {{ episode.characters.length }}</div>
-            <div>Episode aired {{ episode.air_date }}</div>
+            <div v-text="seasonAndEpisode"></div>
+            <div v-text="numberOfCharacters"></div>
+            <div v-text="episodeAired"></div>
         </div>
     </div>
 </template>
@@ -49,6 +49,14 @@ export default {
             );
 
             return `Season ${season} · Episode ${episode}`;
+        },
+
+        numberOfCharacters() {
+            return "Number of characters" + this.episode.characters.length;
+        },
+
+        episodeAired() {
+            return "Episode aired" + this.episode.air_date;
         },
     },
 };
