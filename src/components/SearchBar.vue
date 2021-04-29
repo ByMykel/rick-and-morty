@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Icons from "@/components/Icons.vue";
+import Icons from "./Icons.vue";
 
 export default {
     name: "SearchInput",

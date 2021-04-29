@@ -56,12 +56,12 @@
 </template>
 
 <script>
-import Spinner from "@/components/Spinner.vue";
-import Modal from "@/components/Modal.vue";
-import SearchBar from "@/components/SearchBar.vue";
-import FilterOptions from "@/components/FilterOptions.vue";
-import CharacterCard from "@/components/CharacterCard.vue";
-import CharacterInfo from "@/components/CharacterInfo.vue";
+import Spinner from "../components/Spinner.vue";
+import Modal from "../components/Modal.vue";
+import SearchBar from "../components/SearchBar.vue";
+import FilterOptions from "../components/FilterOptions.vue";
+import CharacterCard from "../components/CharacterCard.vue";
+import CharacterInfo from "../components/CharacterInfo.vue";
 
 import { RepositoryFactory } from "../repositories/RepositoryFactory";
 const CharactersRepository = RepositoryFactory.get("characters");

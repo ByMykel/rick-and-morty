@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import CharacterAttribute from "@/components/CharacterAttribute.vue";
+import CharacterAttribute from "./CharacterAttribute.vue";
 
 export default {
     name: "CharacterAttributeList",

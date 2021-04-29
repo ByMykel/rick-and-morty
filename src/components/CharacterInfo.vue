@@ -37,10 +37,10 @@
 </template>
 
 <script>
-import Spinner from "@/components/Spinner.vue";
-import CharacterAttributeList from "@/components/CharacterAttributeList.vue";
-import EpisodeCard from "@/components/EpisodeCard.vue";
-import { RepositoryFactory } from "./../repositories/RepositoryFactory";
+import Spinner from "./Spinner.vue";
+import CharacterAttributeList from "./CharacterAttributeList.vue";
+import EpisodeCard from "./EpisodeCard.vue";
+import { RepositoryFactory } from "../repositories/RepositoryFactory";
 
 const CharactersRepository = RepositoryFactory.get("characters");
 const EpisodesRepository = RepositoryFactory.get("episodes");

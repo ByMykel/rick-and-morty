@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Dropdown from "@/components/Dropdown.vue";
+import Dropdown from "./Dropdown.vue";
 
 export default {
     name: "SearchFilter",
