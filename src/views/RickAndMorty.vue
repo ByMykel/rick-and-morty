@@ -18,13 +18,13 @@
             </modal>
         </transition>
 
-        <search-bar @fetch-data="(filters.name = $event), fetch()"></search-bar>
+        <search-bar @fetch-data="name = $event"></search-bar>
 
         <filter-options
-            :selected-status="filters.status"
-            :selected-gender="filters.gender"
-            @status-changed="(filters.status = $event), fetch()"
-            @gender-changed="(filters.gender = $event), fetch()"
+            :selected-status="status"
+            :selected-gender="gender"
+            @status-changed="status = $event"
+            @gender-changed="gender = $event"
         ></filter-options>
 
         <div
@@ -86,11 +86,9 @@ export default {
                 last: 1,
             },
             loading: false,
-            filters: {
-                name: "",
-                status: "",
-                gender: "",
-            },
+            name: "",
+            status: "",
+            gender: "",
             characterId: null,
             showModal: false,
         };
@@ -98,63 +96,49 @@ export default {
 
     computed: {
         message() {
-            if (
-                this.filters.name &&
-                this.filters.status &&
-                this.filters.gender
-            ) {
-                return `${this.numberCharacters} results for <span class="font-medium">${this.filters.status}</span> characters matching <span class="font-medium">${this.filters.name}</span> with <span class="font-medium">${this.filters.gender}</span> gender`;
+            if (this.name && this.status && this.gender) {
+                return `${this.numberCharacters} results for <span class="font-medium">${this.status}</span> characters matching <span class="font-medium">${this.name}</span> with <span class="font-medium">${this.gender}</span> gender`;
             }
 
-            if (
-                this.filters.name &&
-                this.filters.status &&
-                !this.filters.gender
-            ) {
-                return `${this.numberCharacters} results for <span class="font-medium">${this.filters.status}</span> characters matching <span class="font-medium">${this.filters.name}</span>`;
+            if (this.name && this.status && !this.gender) {
+                return `${this.numberCharacters} results for <span class="font-medium">${this.status}</span> characters matching <span class="font-medium">${this.name}</span>`;
             }
 
-            if (
-                this.filters.name &&
-                !this.filters.status &&
-                this.filters.gender
-            ) {
-                return `${this.numberCharacters} results for characters matching <span class="font-medium">${this.filters.name}</span> with <span class="font-medium">${this.filters.gender}</span> gender`;
+            if (this.name && !this.status && this.gender) {
+                return `${this.numberCharacters} results for characters matching <span class="font-medium">${this.name}</span> with <span class="font-medium">${this.gender}</span> gender`;
             }
 
-            if (
-                !this.filters.name &&
-                this.filters.status &&
-                this.filters.gender
-            ) {
-                return `${this.numberCharacters} results for <span class="font-medium">${this.filters.status}</span> characters with <span class="font-medium">${this.filters.gender}</span> gender`;
+            if (!this.name && this.status && this.gender) {
+                return `${this.numberCharacters} results for <span class="font-medium">${this.status}</span> characters with <span class="font-medium">${this.gender}</span> gender`;
             }
 
-            if (
-                this.filters.name &&
-                !this.filters.status &&
-                !this.filters.gender
-            ) {
-                return `${this.numberCharacters} results for characters matching <span class="font-medium">${this.filters.name}</span>`;
+            if (this.name && !this.status && !this.gender) {
+                return `${this.numberCharacters} results for characters matching <span class="font-medium">${this.name}</span>`;
             }
 
-            if (
-                !this.filters.name &&
-                !this.filters.status &&
-                this.filters.gender
-            ) {
-                return `${this.numberCharacters} results for characters with <span class="font-medium">${this.filters.gender}</span> gender`;
+            if (!this.name && !this.status && this.gender) {
+                return `${this.numberCharacters} results for characters with <span class="font-medium">${this.gender}</span> gender`;
             }
 
-            if (
-                !this.filters.name &&
-                this.filters.status &&
-                !this.filters.gender
-            ) {
-                return `${this.numberCharacters} results for <span class="font-medium">${this.filters.status}</span> characters`;
+            if (!this.name && this.status && !this.gender) {
+                return `${this.numberCharacters} results for <span class="font-medium">${this.status}</span> characters`;
             }
 
             return "";
+        },
+    },
+
+    watch: {
+        name() {
+            this.fetch();
+        },
+
+        status() {
+            this.fetch();
+        },
+
+        gender() {
+            this.fetch();
         },
     },
 
@@ -188,9 +172,9 @@ export default {
 
             try {
                 const data = await CharactersRepository.getAll(
-                    this.filters.name,
-                    this.filters.status,
-                    this.filters.gender,
+                    this.name,
+                    this.status,
+                    this.gender,
                     page
                 );
 
