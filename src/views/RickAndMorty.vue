@@ -28,7 +28,6 @@
         ></filter-options>
 
         <div
-            v-if="showMessage"
             class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8 break-words"
             v-html="message"
         ></div>
@@ -98,10 +97,6 @@ export default {
     },
 
     computed: {
-        showMessage() {
-            return true;
-        },
-
         message() {
             if (
                 this.filters.name &&
