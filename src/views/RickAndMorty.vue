@@ -8,24 +8,24 @@
             leave-class="transform opacity-100 translate-y-0"
             leave-to-class="transform opacity-0 -translate-y-32"
         >
-            <modal
+            <modal-character
                 :showing="showModal"
                 :showClose="true"
                 :backgroundClose="true"
+                :characterId="characterId"
                 @close="showModal = false"
             >
-                <character-info :id="characterId"></character-info>
-            </modal>
+            </modal-character>
         </transition>
 
         <search-bar @fetch-data="name = $event"></search-bar>
 
-        <filter-options
+        <search-options
             :selected-status="status"
             :selected-gender="gender"
             @status-changed="status = $event"
             @gender-changed="gender = $event"
-        ></filter-options>
+        ></search-options>
 
         <div
             class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8 break-words"
@@ -36,12 +36,12 @@
             <div
                 class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2"
             >
-                <character-card
+                <card-character
                     v-for="character in characters"
                     :key="character.id"
                     :character="character"
                     @show-character="(characterId = $event), (showModal = true)"
-                ></character-card>
+                ></card-character>
 
                 <div
                     v-if="characters.length"
@@ -56,11 +56,10 @@
 
 <script>
 import Spinner from "../components/Spinner.vue";
-import Modal from "../components/Modal.vue";
+import ModalCharacter from "../components/ModalCharacter.vue";
 import SearchBar from "../components/SearchBar.vue";
-import FilterOptions from "../components/FilterOptions.vue";
-import CharacterCard from "../components/CharacterCard.vue";
-import CharacterInfo from "../components/CharacterInfo.vue";
+import SearchOptions from "../components/SearchOptions.vue";
+import CardCharacter from "../components/CardCharacter.vue";
 
 import { RepositoryFactory } from "../repositories/RepositoryFactory";
 const CharactersRepository = RepositoryFactory.get("characters");
@@ -69,11 +68,10 @@ export default {
     name: "CharactersList",
 
     components: {
-        Modal,
-        CharacterInfo,
+        ModalCharacter,
         SearchBar,
-        FilterOptions,
-        CharacterCard,
+        SearchOptions,
+        CardCharacter,
         Spinner,
     },
 

@@ -27,11 +27,11 @@
                 <p>All the episodes where the character appears.</p>
             </div>
 
-            <episode-card
+            <card-episode
                 v-for="episode in episodes"
                 :key="episode.id"
                 :episode="episode"
-            ></episode-card>
+            ></card-episode>
         </div>
     </div>
 </template>
@@ -39,7 +39,7 @@
 <script>
 import Spinner from "./Spinner.vue";
 import CharacterAttributeList from "./CharacterAttributeList.vue";
-import EpisodeCard from "./EpisodeCard.vue";
+import CardEpisode from "./CardEpisode.vue";
 import { RepositoryFactory } from "../repositories/RepositoryFactory";
 
 const CharactersRepository = RepositoryFactory.get("characters");
@@ -51,7 +51,7 @@ export default {
     components: {
         CharacterAttributeList,
         Spinner,
-        EpisodeCard,
+        CardEpisode,
     },
 
     props: {

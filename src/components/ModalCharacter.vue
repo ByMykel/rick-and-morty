@@ -17,7 +17,7 @@
             </button>
 
             <div class="overflow-auto max-h-screen w-full no-scrollbar">
-                <slot />
+                <character-details :id="characterId"></character-details>
             </div>
         </div>
     </div>
@@ -25,15 +25,19 @@
 
 <script>
 import Icons from "./Icons.vue";
+import CharacterDetails from "./CharacterDetails.vue";
 
 export default {
     name: "Modal",
 
     components: {
         Icons,
+        CharacterDetails,
     },
 
     props: {
+        characterId: Number,
+
         showing: {
             required: true,
             type: Boolean,
