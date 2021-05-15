@@ -39,13 +39,10 @@
                 ></div>
             </div>
         </div>
-
-        <spinner :show="false"></spinner>
     </div>
 </template>
 
 <script>
-import Spinner from "../components/Spinner.vue";
 import ModalCharacter from "../components/ModalCharacter.vue";
 import SearchBar from "../components/SearchBar.vue";
 import SearchOptions from "../components/SearchOptions.vue";
@@ -61,7 +58,6 @@ export default {
         SearchBar,
         SearchOptions,
         CardCharacter,
-        Spinner,
     },
 
     data() {
