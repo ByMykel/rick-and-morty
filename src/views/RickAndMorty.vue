@@ -20,37 +20,27 @@
 
         <search-bar @fetch-data="name = $event"></search-bar>
 
-        <search-options
-            :selected-status="status"
-            :selected-gender="gender"
-            @status-changed="status = $event"
-            @gender-changed="gender = $event"
-        ></search-options>
-
-        <div
-            class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8 break-words"
-            v-html="message"
-        ></div>
+        <search-options></search-options>
 
         <div class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div
                 class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2"
             >
                 <card-character
-                    v-for="character in characters"
+                    v-for="character in items"
                     :key="character.id"
                     :character="character"
                     @show-character="(characterId = $event), (showModal = true)"
                 ></card-character>
 
                 <div
-                    v-if="characters.length"
+                    v-if="filtered.length"
                     v-observe-visibility="handleScrolledToBottom"
                 ></div>
             </div>
         </div>
 
-        <spinner :show="loading"></spinner>
+        <spinner :show="false"></spinner>
     </div>
 </template>
 
@@ -61,11 +51,10 @@ import SearchBar from "../components/SearchBar.vue";
 import SearchOptions from "../components/SearchOptions.vue";
 import CardCharacter from "../components/CardCharacter.vue";
 
-import { RepositoryFactory } from "../repositories/RepositoryFactory";
-const CharactersRepository = RepositoryFactory.get("characters");
+import { mapState } from "vuex";
 
 export default {
-    name: "CharactersList",
+    name: "RickAndMorty",
 
     components: {
         ModalCharacter,
@@ -77,71 +66,27 @@ export default {
 
     data() {
         return {
-            characters: [],
-            numberCharacters: 0,
-            page: {
-                actual: 1,
-                last: 1,
-            },
-            loading: false,
             name: "",
-            status: "",
-            gender: "",
             characterId: null,
             showModal: false,
         };
     },
 
+    created() {
+        this.$store.dispatch("characters/loadData");
+    },
+
     computed: {
-        message() {
-            if (this.name && this.status && this.gender) {
-                return `${this.numberCharacters} results for <span class="font-medium">${this.status}</span> characters matching <span class="font-medium">${this.name}</span> with <span class="font-medium">${this.gender}</span> gender`;
-            }
-
-            if (this.name && this.status && !this.gender) {
-                return `${this.numberCharacters} results for <span class="font-medium">${this.status}</span> characters matching <span class="font-medium">${this.name}</span>`;
-            }
-
-            if (this.name && !this.status && this.gender) {
-                return `${this.numberCharacters} results for characters matching <span class="font-medium">${this.name}</span> with <span class="font-medium">${this.gender}</span> gender`;
-            }
-
-            if (!this.name && this.status && this.gender) {
-                return `${this.numberCharacters} results for <span class="font-medium">${this.status}</span> characters with <span class="font-medium">${this.gender}</span> gender`;
-            }
-
-            if (this.name && !this.status && !this.gender) {
-                return `${this.numberCharacters} results for characters matching <span class="font-medium">${this.name}</span>`;
-            }
-
-            if (!this.name && !this.status && this.gender) {
-                return `${this.numberCharacters} results for characters with <span class="font-medium">${this.gender}</span> gender`;
-            }
-
-            if (!this.name && this.status && !this.gender) {
-                return `${this.numberCharacters} results for <span class="font-medium">${this.status}</span> characters`;
-            }
-
-            return "";
-        },
+        ...mapState({
+            filtered: (state) => state.characters.filtered,
+            items: (state) => state.characters.items,
+        }),
     },
 
     watch: {
         name() {
-            this.fetch();
+            this.$store.dispatch("characters/setNameFilter", this.name);
         },
-
-        status() {
-            this.fetch();
-        },
-
-        gender() {
-            this.fetch();
-        },
-    },
-
-    mounted() {
-        this.fetch();
     },
 
     methods: {
@@ -150,41 +95,7 @@ export default {
                 return;
             }
 
-            this.page.actual++;
-
-            this.fetch(this.page.actual);
-        },
-
-        async fetch(page = 1) {
-            if (page > this.page.last) {
-                return;
-            }
-
-            if (page === 1) {
-                this.page.actual = 1;
-                this.characters = [];
-                this.numberCharacters = 0;
-            }
-
-            this.loading = true;
-
-            try {
-                const data = await CharactersRepository.getAll(
-                    this.name,
-                    this.status,
-                    this.gender,
-                    page
-                );
-
-                this.characters.push(...data.data.results);
-                this.page.last = data.data.info.pages;
-                this.numberCharacters = data.data.info.count;
-            } catch {
-                this.characters = [];
-                this.numberCharacters = 0;
-            } finally {
-                this.loading = false;
-            }
+            this.$store.dispatch("characters/loadItems");
         },
     },
 };

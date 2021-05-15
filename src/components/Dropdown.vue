@@ -6,9 +6,7 @@
                 class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 capitalize"
                 @click="show = !show"
             >
-                <span>{{ name }}:</span>
-
-                <span class="font-bold pl-1" v-text="selected"> </span>
+                <span>{{ name }}</span>
 
                 <icons icon="chevron-down-dropdown"></icons>
             </button>
@@ -24,30 +22,36 @@
         >
             <div
                 v-show="show"
-                class="py-1 z-50 origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="py-1 z-50 origin-top-right absolute left-0 mt-2 w-56 h-auto max-h-60 overflow-auto no-scrollbar rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
-                <div
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
-                    @click="
-                        (selected = ''),
-                            (show = false),
-                            $parent.$emit(event, selected)
-                    "
-                >
-                    All
-                </div>
-
                 <div
                     v-for="(tag, index) in options"
                     :key="index"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 capitalize cursor-pointer"
+                    :class="{ 'pl-11': !selected.includes(tag) }"
+                    class="flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 capitalize cursor-pointer"
                     @click="
-                        (selected = tag),
+                        handleSelected(tag),
                             (show = false),
-                            $parent.$emit(event, selected)
+                            $store.dispatch(`characters/set${name}Filter`, tag)
                     "
-                    v-text="tag"
-                ></div>
+                >
+                    <span v-if="selected.includes(tag)">
+                        <svg
+                            class="w-5 h-5 mr-2"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"
+                            ></path>
+                        </svg>
+                    </span>
+
+                    <span class="truncate" v-text="tag ? tag : 'None'"></span>
+                </div>
             </div>
         </transition>
     </div>
@@ -55,6 +59,7 @@
 
 <script>
 import Icons from "./Icons.vue";
+import { mapState } from "vuex";
 
 export default {
     name: "FilterTag",
@@ -65,15 +70,20 @@ export default {
 
     props: {
         name: String,
-        event: String,
-        options: Array,
+        options: [Array, Set],
     },
 
     data() {
         return {
-            selected: "All",
+            selected: [],
             show: false,
         };
+    },
+
+    computed: {
+        ...mapState({
+            filters: (state) => state.characters.filters,
+        }),
     },
 
     methods: {
@@ -83,6 +93,17 @@ export default {
             if (!showOptions || showOptions.contains(event.target)) return;
 
             this.show = false;
+        },
+
+        handleSelected(filter) {
+            if (this.selected.includes(filter)) {
+                this.selected = this.selected.filter(
+                    (element) => element !== filter
+                );
+                return;
+            }
+
+            this.selected.push(filter);
         },
     },
 
