@@ -86,6 +86,10 @@ export default {
         }),
     },
 
+    mounted() {
+        document.addEventListener("click", this.onClickOutside);
+    },
+
     methods: {
         onClickOutside(event) {
             const { showOptions } = this.$refs;
@@ -105,10 +109,6 @@ export default {
 
             this.selected.push(filter);
         },
-    },
-
-    mounted() {
-        document.addEventListener("click", this.onClickOutside);
     },
 };
 </script>

@@ -95,11 +95,6 @@ export default {
         };
     },
 
-    created() {
-        this.$store.dispatch("characters/loadData");
-        document.querySelector("body").classList.add("overflow-hidden");
-    },
-
     computed: {
         ...mapState({
             filtered: (state) => state.characters.filtered,
@@ -121,6 +116,11 @@ export default {
                     .classList.remove("overflow-hidden");
             }
         },
+    },
+
+    created() {
+        this.$store.dispatch("characters/loadData");
+        document.querySelector("body").classList.add("overflow-hidden");
     },
 
     methods: {
