@@ -12,7 +12,7 @@
                 :showing="showModal"
                 :showClose="true"
                 :backgroundClose="true"
-                :characterId="characterId"
+                :character="selectedCharacter"
                 @close="showModal = false"
             >
             </modal-character>
@@ -30,7 +30,7 @@
                     v-for="character in items"
                     :key="character.id"
                     :character="character"
-                    @show-character="(characterId = $event), (showModal = true)"
+                    @show-character="(selectedCharacter = $event), (showModal = true)"
                 ></card-character>
 
                 <div
@@ -67,7 +67,7 @@ export default {
     data() {
         return {
             name: "",
-            characterId: null,
+            selectedCharacter: null,
             showModal: false,
         };
     },
@@ -80,6 +80,7 @@ export default {
         ...mapState({
             filtered: (state) => state.characters.filtered,
             items: (state) => state.characters.items,
+            episodes: (state) => state.characters.episodes,
         }),
     },
 

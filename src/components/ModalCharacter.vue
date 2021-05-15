@@ -17,7 +17,7 @@
             </button>
 
             <div class="overflow-auto max-h-screen w-full no-scrollbar">
-                <character-details :id="characterId"></character-details>
+                <character-details :character="character"></character-details>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@ export default {
     },
 
     props: {
-        characterId: Number,
+        character: Object,
 
         showing: {
             required: true,

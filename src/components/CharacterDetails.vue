@@ -1,8 +1,6 @@
 <template>
     <div class="mx-auto max-w-screen-2xl pb-24">
-        <spinner :show="loading" :classes="'mt-40'"></spinner>
-
-        <div v-if="!loading && character">
+        <div v-if="character">
             <img
                 :src="character.image"
                 class="w-7 absolute top-2 left-6 rounded-md shadow-sm"
@@ -28,7 +26,7 @@
             </div>
 
             <card-episode
-                v-for="episode in episodes"
+                v-for="episode in episodes(character)"
                 :key="episode.id"
                 :episode="episode"
             ></card-episode>
@@ -37,58 +35,27 @@
 </template>
 
 <script>
-import Spinner from "./Spinner.vue";
 import CharacterAttributeList from "./CharacterAttributeList.vue";
 import CardEpisode from "./CardEpisode.vue";
-import { RepositoryFactory } from "../repositories/RepositoryFactory";
 
-const CharactersRepository = RepositoryFactory.get("characters");
-const EpisodesRepository = RepositoryFactory.get("episodes");
+import { mapGetters } from "vuex";
 
 export default {
     name: "CharacterInfo",
 
     components: {
         CharacterAttributeList,
-        Spinner,
         CardEpisode,
     },
 
     props: {
-        id: Number,
+        character: Object,
     },
 
-    data() {
-        return {
-            character: null,
-            episodes: [],
-            loading: false,
-        };
-    },
-
-    mounted() {
-        this.fetch();
-    },
-
-    methods: {
-        async fetch() {
-            this.loading = true;
-
-            const data = await CharactersRepository.get(this.id);
-            this.character = data.data;
-
-            const episodesId = this.character.episode.map((name) => {
-                return name.match(/episode\/(\d+)/).pop();
-            });
-
-            const episodes = await EpisodesRepository.get(episodesId);
-
-            this.episodes = Array.isArray(episodes.data)
-                ? episodes.data
-                : [episodes.data];
-
-            this.loading = false;
-        },
+    computed: {
+        ...mapGetters("characters", {
+            episodes: "getCharacterEpisodes",
+        }),
     },
 };
 </script>

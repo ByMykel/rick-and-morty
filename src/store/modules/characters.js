@@ -1,6 +1,13 @@
 import { RepositoryFactory } from "../../repositories/RepositoryFactory";
 const CharactersRepository = RepositoryFactory.get("characters");
 const LocationsRepository = RepositoryFactory.get("locations");
+const EpisodesRepository = RepositoryFactory.get("episodes");
+
+function check(state, character, value) {
+    return (
+        !state.filters[value].length || state.filters[value].includes(character)
+    );
+}
 
 const state = () => ({
     all: [],
@@ -17,17 +24,27 @@ const state = () => ({
     },
     type: new Set(),
     species: new Set(),
-    locations: [{name: 'unknown'}],
+    locations: [{ name: "unknown" }],
+    episodes: [],
 });
+
+const getters = {
+    getCharacterEpisodes: (state) => (character) => {
+        return character.episode.map(episode => state.episodes.get(episode))
+      }
+    
+}
 
 const actions = {
     loadData({ dispatch }) {
         dispatch("getAllCharacters");
         dispatch("getAllLocations");
+        dispatch("getAllEpisodes");
     },
 
     async getAllCharacters({ commit, dispatch }, page = 1) {
-        let data = await CharactersRepository.getAll("", "", "", page);
+        const data = await CharactersRepository.getAll(page);
+
         commit("setCharacters", data.data.results);
         commit("loadSpeciesFilters", data.data.results);
         commit("loadTypeFilters", data.data.results);
@@ -41,7 +58,8 @@ const actions = {
     },
 
     async getAllLocations({ commit, dispatch }, page = 1) {
-        let data = await LocationsRepository.getAll(page);
+        const data = await LocationsRepository.getAll(page);
+
         commit("setLocations", data.data.results);
 
         if (data.data.info.next) {
@@ -51,91 +69,102 @@ const actions = {
         }
     },
 
+    async getAllEpisodes({ commit, dispatch }, page = 1) {
+        const data = await EpisodesRepository.getAll(page);
+
+        commit("setEpisodes", data.data.results);
+
+        if (data.data.info.next) {
+            dispatch("getAllEpisodes", ++page);
+        } else {
+            commit("mapAllEpisodes");
+        }
+    },
+
     filterCharacters({ commit }) {
         commit("filterCharacters");
     },
 
     setStatusFilter({ commit, state }, filter) {
-        commit("resetPage");
+        commit("resetData");
+
         if (state.filters.status.includes(filter)) {
             commit("removeStatusFilter", filter);
-            commit("filterCharacters");
-            commit("loadItems");
-            return;
+        } else {
+            commit("setStatusFilter", filter);
         }
 
-        commit("setStatusFilter", filter);
         commit("filterCharacters");
         commit("loadItems");
     },
 
     setGenderFilter({ commit, state }, filter) {
-        commit("resetPage");
+        commit("resetData");
+
         if (state.filters.gender.includes(filter)) {
             commit("removeGenderFilter", filter);
-            commit("filterCharacters");
-            commit("loadItems");
-            return;
+        } else {
+            commit("setGenderFilter", filter);
         }
-        commit("setGenderFilter", filter);
+
         commit("filterCharacters");
         commit("loadItems");
     },
 
     setTypeFilter({ commit, state }, filter) {
-        commit("resetPage");
+        commit("resetData");
+
         if (state.filters.type.includes(filter)) {
             commit("removeTypeFilter", filter);
-            commit("filterCharacters");
-            commit("loadItems");
-            return;
+        } else {
+            commit("setTypeFilter", filter);
         }
-        commit("setTypeFilter", filter);
+
         commit("filterCharacters");
         commit("loadItems");
     },
 
     setSpeciesFilter({ commit, state }, filter) {
-        commit("resetPage");
+        commit("resetData");
+
         if (state.filters.species.includes(filter)) {
             commit("removeSpeciesFilter", filter);
-            commit("filterCharacters");
-            commit("loadItems");
-            return;
+        } else {
+            commit("setSpeciesFilter", filter);
         }
-        commit("setSpeciesFilter", filter);
+
         commit("filterCharacters");
         commit("loadItems");
     },
 
     setOriginFilter({ commit, state }, filter) {
-        commit("resetPage");
+        commit("resetData");
+
         if (state.filters.origin.includes(filter)) {
             commit("removeOriginFilter", filter);
-            commit("filterCharacters");
-            commit("loadItems");
-            return;
+        } else {
+            commit("setOriginFilter", filter);
         }
-        commit("setOriginFilter", filter);
+
         commit("filterCharacters");
         commit("loadItems");
     },
 
     setLocationFilter({ commit, state }, filter) {
-        commit("resetPage");
+        commit("resetData");
+
         if (state.filters.location.includes(filter)) {
             commit("removeLocationFilter", filter);
-            commit("filterCharacters");
-            commit("loadItems");
-            return;
+        } else {
+            commit("setLocationFilter", filter);
         }
-        commit("setLocationFilter", filter);
+
         commit("filterCharacters");
         commit("loadItems");
     },
 
     setNameFilter({ commit }, name) {
-        commit("resetPage");
+        commit("resetData");
         commit("setNameFilter", name);
         commit("filterCharacters");
         commit("loadItems");
@@ -155,29 +184,25 @@ const mutations = {
         state.locations.push(...locations);
     },
 
+    setEpisodes(state, episodes) {
+        state.episodes.push(...episodes);
+    },
+
     filterCharacters(state) {
-        const characters = state.all.filter((character) => {
+        state.filtered = state.all.filter((character) => {
             return (
-                (!state.filters.status.length ||
-                    state.filters.status.includes(character.status)) &&
-                (!state.filters.gender.length ||
-                    state.filters.gender.includes(character.gender)) &&
-                (!state.filters.type.length ||
-                    state.filters.type.includes(character.type)) &&
-                (!state.filters.species.length ||
-                    state.filters.species.includes(character.species)) &&
-                (!state.filters.origin.length ||
-                    state.filters.origin.includes(character.origin.name)) &&
-                (!state.filters.location.length ||
-                    state.filters.location.includes(character.location.name)) &&
+                check(state, character.status, "status") &&
+                check(state, character.gender, "gender") &&
+                check(state, character.type, "type") &&
+                check(state, character.species, "species") &&
+                check(state, character.origin.name, "origin") &&
+                check(state, character.location.name, "location") &&
                 (!state.filters.name.length ||
                     character.name
                         .toLowerCase()
                         .includes(state.filters.name.toLowerCase()))
             );
         });
-
-        state.filtered = characters;
     },
 
     setStatusFilter(state, filter) {
@@ -248,7 +273,7 @@ const mutations = {
         state.items.push(...state.filtered.splice(0, 20));
     },
 
-    resetPage(state) {
+    resetData(state) {
         state.items = [];
     },
 
@@ -257,17 +282,26 @@ const mutations = {
     },
 
     loadSpeciesFilters(state, items) {
-        items.map((item) => item.species).forEach(state.species.add, state.species);
+        items
+            .map((item) => item.species)
+            .forEach(state.species.add, state.species);
     },
 
     mapAllLocations(state) {
-        state.locations = state.locations.map(item => item.name);
+        state.locations = state.locations.map((item) => item.name);
+    },
+
+    mapAllEpisodes(state) {
+        state.episodes = new Map(
+            state.episodes.map((item) => [item.url, item])
+        );
     },
 };
 
 export default {
     namespaced: true,
     state,
+    getters,
     actions,
     mutations,
 };

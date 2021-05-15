@@ -1,7 +1,7 @@
 <template>
     <div
         class="bg-white h-72 rounded-md shadow text-center hover:shadow-2xl cursor-pointer relative overflow-hidden"
-        @click="$emit('show-character', character.id)"
+        @click="$emit('show-character', character)"
     >
         <div
             :class="genderColor"
