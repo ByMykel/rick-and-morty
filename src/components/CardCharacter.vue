@@ -4,18 +4,25 @@
         @click="$emit('show-character', character)"
     >
         <div
+            v-show="!skeletonImage"
             :class="genderColor"
             class="top-0 text-xs right-0 absolute font-medium text-white px-3 py-1 rounded-bl-md"
             v-text="character.gender"
         ></div>
-
-        <img class="h-48 sm:40 w-full object-cover" :src="character.image" />
-
+        <div
+            v-show="skeletonImage"
+            class="h-48 sm:40 w-full bg-gray-400 animate-pulse"
+        ></div>
+        <img
+            v-show="!skeletonImage"
+            class="h-48 sm:40 w-full object-cover"
+            :src="character.image"
+            @load="skeletonImage = false"
+        />
         <div
             :class="statusColor"
             class="w-15 h-1 flex justify-center items-center"
         ></div>
-
         <div class="p-1 text-md font-medium" v-text="character.name"></div>
     </div>
 </template>
@@ -26,6 +33,12 @@ export default {
 
     props: {
         character: Object,
+    },
+
+    data() {
+        return {
+            skeletonImage: true,
+        };
     },
 
     computed: {
