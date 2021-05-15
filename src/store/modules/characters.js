@@ -26,14 +26,14 @@ const state = () => ({
     species: new Set(),
     locations: [{ name: "unknown" }],
     episodes: [],
+    loading: true,
 });
 
 const getters = {
     getCharacterEpisodes: (state) => (character) => {
-        return character.episode.map(episode => state.episodes.get(episode))
-      }
-    
-}
+        return character.episode.map((episode) => state.episodes.get(episode));
+    },
+};
 
 const actions = {
     loadData({ dispatch }) {
@@ -78,6 +78,10 @@ const actions = {
             dispatch("getAllEpisodes", ++page);
         } else {
             commit("mapAllEpisodes");
+
+            setTimeout(() => {
+                commit("finishLoading");
+            }, 1000);
         }
     },
 
@@ -295,6 +299,10 @@ const mutations = {
         state.episodes = new Map(
             state.episodes.map((item) => [item.url, item])
         );
+    },
+
+    finishLoading(state) {
+        state.loading = false;
     },
 };
 
