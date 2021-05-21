@@ -43,9 +43,12 @@
             </modal-character>
         </transition>
 
-        <search-bar @fetch-data="name = $event"></search-bar>
+        <search-bar
+            @fetch-data="name = $event"
+            @toggle-filters="showFilters = !showFilters"
+        ></search-bar>
 
-        <search-options></search-options>
+        <search-options v-show="showFilters"></search-options>
 
         <div class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div
@@ -92,6 +95,7 @@ export default {
             name: "",
             selectedCharacter: null,
             showModal: false,
+            showFilters: false,
         };
     },
 

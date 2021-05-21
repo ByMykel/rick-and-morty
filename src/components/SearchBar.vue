@@ -17,6 +17,14 @@
         >
             <icons icon="search"></icons>
         </button>
+
+        <button
+            type="submit"
+            class="absolute right-1 top-0 mt-1 sm:right-7 lg:right-9 text-gray-700 hover:bg-gray-200 rounded-md p-1"
+            @click.prevent="$emit('toggle-filters')"
+        >
+            <icons icon="filter"></icons>
+        </button>
     </div>
 </template>
 

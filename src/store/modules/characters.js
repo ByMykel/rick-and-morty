@@ -22,6 +22,8 @@ const state = () => ({
         origin: [],
         location: [],
     },
+    status: ['Alive', 'Dead', 'unknown'],
+    gender: ['Female', 'Male', 'Genderless', 'unknown'],
     type: new Set(),
     species: new Set(),
     locations: [{ name: "unknown" }],
@@ -32,6 +34,14 @@ const state = () => ({
 const getters = {
     getCharacterEpisodes: (state) => (character) => {
         return character.episode.map((episode) => state.episodes.get(episode));
+    },
+
+    getCharactersType: (state) => {
+        return [...state.type];
+    },
+
+    getCharactersSpecies: (state) => {
+        return [...state.species];
     },
 };
 
@@ -282,13 +292,17 @@ const mutations = {
     },
 
     loadTypeFilters(state, items) {
-        items.map((item) => item.type).forEach(state.type.add, state.type);
+        state.type = new Set([
+            ...state.type,
+            ...items.map((item) => item.type),
+        ]);
     },
 
     loadSpeciesFilters(state, items) {
-        items
-            .map((item) => item.species)
-            .forEach(state.species.add, state.species);
+        state.species = new Set([
+            ...state.species,
+            ...items.map((item) => item.species),
+        ]);
     },
 
     mapAllLocations(state) {
