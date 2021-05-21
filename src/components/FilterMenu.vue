@@ -1,6 +1,6 @@
 <template>
     <div
-        class="bg-white w-full h-72 mb-10 p-2 overflow-auto overflow-x-hidden cursor-pointer"
+        class="bg-white w-full h-full p-2 overflow-auto overflow-x-hidden cursor-pointer"
     >
         <input
             v-model="searchText"

@@ -1,9 +1,9 @@
 <template>
     <div class="mx-auto mt-2 max-w-6xl w-full sm:px-6 lg:px-8">
         <div
-            class="flex flex-col bg-white border border-gray-300 h-72 rounded-md overflow-hidden"
+            class="flex flex-col sm:flex-row bg-white border border-gray-300 h-80 rounded-md overflow-hidden"
         >
-            <div class="w-44 p-2 text-black flex">
+            <div class="hidden sm:block w-44 p-2 text-black">
                 <div
                     class="hover:bg-gray-200 rounded px-2 mb-0.5 cursor-pointer"
                     :class="{ 'bg-gray-200': selected === 1 }"
@@ -43,6 +43,98 @@
                     class="hover:bg-gray-200 rounded px-2 mb-0.5 cursor-pointer"
                     :class="{ 'bg-gray-200': selected === 6 }"
                     @click="selected = 6"
+                >
+                    Location
+                </div>
+            </div>
+
+            <div
+                class="sm:hidden bg-gray-200 rounded-md my-1 mx-1 p-2 flex justify-between"
+            >
+                <span class="text-sm flex items-center">
+                    <span class="font-bold ml-1">{{
+                        selectedFilterInText
+                    }}</span>
+                </span>
+
+                <span @click="showOptions = !showOptions">
+                    <svg
+                        v-if="!showOptions"
+                        class="w-6 h-6 cursor-pointer"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"
+                        ></path>
+                    </svg>
+
+                    <svg
+                        v-else
+                        class="w-6 h-6 cursor-pointer"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"
+                        ></path>
+                    </svg>
+                </span>
+            </div>
+
+            <div
+                v-if="showOptions"
+                class="flex flex-col space-y-2 m-2 mt-1 text-black"
+            >
+                <div
+                    class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 cursor-pointer"
+                    :class="{ 'bg-gray-200': selected == 1 }"
+                    @click="(selected = 1), (showOptions = false)"
+                >
+                    Status
+                </div>
+                <div
+                    class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 cursor-pointer"
+                    :class="{ 'bg-gray-200': selected === 2 }"
+                    @click="(selected = 2), (showOptions = false)"
+                >
+                    Gender
+                </div>
+                <div
+                    class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 cursor-pointer"
+                    :class="{ 'bg-gray-200': selected === 3 }"
+                    @click="(selected = 3), (showOptions = false)"
+                >
+                    Type
+                </div>
+                <div
+                    class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 cursor-pointer"
+                    :class="{ 'bg-gray-200': selected === 4 }"
+                    @click="(selected = 4), (showOptions = false)"
+                >
+                    Species
+                </div>
+                <div
+                    class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 cursor-pointer"
+                    :class="{ 'bg-gray-200': selected === 5 }"
+                    @click="(selected = 5), (showOptions = false)"
+                >
+                    Origin
+                </div>
+                <div
+                    class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 cursor-pointer"
+                    :class="{ 'bg-gray-200': selected === 6 }"
+                    @click="(selected = 6), (showOptions = false)"
                 >
                     Location
                 </div>
@@ -96,6 +188,7 @@ export default {
     data() {
         return {
             selected: 1,
+            showOptions: false,
         };
     },
 
@@ -110,6 +203,17 @@ export default {
             type: "getCharactersType",
             species: "getCharactersSpecies",
         }),
+
+        selectedFilterInText() {
+            return {
+                1: "Status",
+                2: "Gender",
+                3: "Type",
+                4: "Species",
+                5: "Origin",
+                6: "Location",
+            }[this.selected];
+        },
     },
 };
 </script>
