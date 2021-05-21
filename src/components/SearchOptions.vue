@@ -94,7 +94,7 @@
 
             <div
                 v-if="showOptions"
-                class="flex flex-col space-y-2 m-2 mt-1 text-black"
+                class="flex sm:hidden flex-col space-y-2 m-2 mt-1 text-black"
             >
                 <div
                     class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 cursor-pointer"
