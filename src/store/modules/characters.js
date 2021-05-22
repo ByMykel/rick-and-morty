@@ -14,6 +14,7 @@ const state = () => ({
     filtered: [],
     items: [],
     filters: {
+        selected: 0,
         name: "",
         status: [],
         gender: [],
@@ -22,8 +23,8 @@ const state = () => ({
         origin: [],
         location: [],
     },
-    status: ['Alive', 'Dead', 'unknown'],
-    gender: ['Female', 'Male', 'Genderless', 'unknown'],
+    status: ["Alive", "Dead", "unknown"],
+    gender: ["Female", "Male", "Genderless", "unknown"],
     type: new Set(),
     species: new Set(),
     locations: [{ name: "unknown" }],
@@ -32,6 +33,14 @@ const state = () => ({
 });
 
 const getters = {
+    getSelectedFilter: (state) => {
+        return state.filters.selected;
+    },
+
+    getNumberOfFilter: (state) => (filter) => {
+        return state.filters[filter.toLowerCase()].length;
+    },
+
     getCharacterEpisodes: (state) => (character) => {
         return character.episode.map((episode) => state.episodes.get(episode));
     },
@@ -187,6 +196,10 @@ const actions = {
     loadItems({ commit }) {
         commit("loadItems");
     },
+
+    setSelectedFilter({ commit }, selected) {
+        commit("setSelectedFilter", selected);
+    },
 };
 
 const mutations = {
@@ -317,6 +330,10 @@ const mutations = {
 
     finishLoading(state) {
         state.loading = false;
+    },
+
+    setSelectedFilter(state, selected) {
+        state.filters.selected = selected;
     },
 };
 
