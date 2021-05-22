@@ -13,7 +13,10 @@
             class="px-2 py-0.5 mb-1 rounded hover:bg-gray-200 flex items-center"
             @click="
                 handleSelected(item),
-                    $store.dispatch(`characters/set${name}Filter`, item)
+                    $store.dispatch(`characters/setFilter`, {
+                        type: name.toLowerCase(),
+                        filter: item,
+                    })
             "
         >
             <input

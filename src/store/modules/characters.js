@@ -55,10 +55,11 @@ const getters = {
 };
 
 const actions = {
-    loadData({ dispatch }) {
-        dispatch("getAllCharacters");
-        dispatch("getAllLocations");
-        dispatch("getAllEpisodes");
+    async loadData({ dispatch }) {
+        await dispatch("getAllCharacters");
+        await dispatch("getAllLocations");
+        await dispatch("getAllEpisodes");
+        dispatch("finishLoading");
     },
 
     async getAllCharacters({ commit, dispatch }, page = 1) {
@@ -69,7 +70,7 @@ const actions = {
         commit("loadTypeFilters", data.data.results);
 
         if (data.data.info.next) {
-            dispatch("getAllCharacters", ++page);
+            await dispatch("getAllCharacters", ++page);
         } else {
             commit("filterCharacters");
             commit("loadItems");
@@ -82,7 +83,7 @@ const actions = {
         commit("setLocations", data.data.results);
 
         if (data.data.info.next) {
-            dispatch("getAllLocations", ++page);
+            await dispatch("getAllLocations", ++page);
         } else {
             commit("mapAllLocations");
         }
@@ -94,13 +95,9 @@ const actions = {
         commit("setEpisodes", data.data.results);
 
         if (data.data.info.next) {
-            dispatch("getAllEpisodes", ++page);
+            await dispatch("getAllEpisodes", ++page);
         } else {
             commit("mapAllEpisodes");
-
-            setTimeout(() => {
-                commit("finishLoading");
-            }, 1000);
         }
     },
 
@@ -108,78 +105,13 @@ const actions = {
         commit("filterCharacters");
     },
 
-    setStatusFilter({ commit, state }, filter) {
+    setFilter({ commit, state }, { type, filter }) {
         commit("resetData");
 
-        if (state.filters.status.includes(filter)) {
-            commit("removeStatusFilter", filter);
+        if (state.filters[type].includes(filter)) {
+            commit("removeFilter", { type, filter });
         } else {
-            commit("setStatusFilter", filter);
-        }
-
-        commit("filterCharacters");
-        commit("loadItems");
-    },
-
-    setGenderFilter({ commit, state }, filter) {
-        commit("resetData");
-
-        if (state.filters.gender.includes(filter)) {
-            commit("removeGenderFilter", filter);
-        } else {
-            commit("setGenderFilter", filter);
-        }
-
-        commit("filterCharacters");
-        commit("loadItems");
-    },
-
-    setTypeFilter({ commit, state }, filter) {
-        commit("resetData");
-
-        if (state.filters.type.includes(filter)) {
-            commit("removeTypeFilter", filter);
-        } else {
-            commit("setTypeFilter", filter);
-        }
-
-        commit("filterCharacters");
-        commit("loadItems");
-    },
-
-    setSpeciesFilter({ commit, state }, filter) {
-        commit("resetData");
-
-        if (state.filters.species.includes(filter)) {
-            commit("removeSpeciesFilter", filter);
-        } else {
-            commit("setSpeciesFilter", filter);
-        }
-
-        commit("filterCharacters");
-        commit("loadItems");
-    },
-
-    setOriginFilter({ commit, state }, filter) {
-        commit("resetData");
-
-        if (state.filters.origin.includes(filter)) {
-            commit("removeOriginFilter", filter);
-        } else {
-            commit("setOriginFilter", filter);
-        }
-
-        commit("filterCharacters");
-        commit("loadItems");
-    },
-
-    setLocationFilter({ commit, state }, filter) {
-        commit("resetData");
-
-        if (state.filters.location.includes(filter)) {
-            commit("removeLocationFilter", filter);
-        } else {
-            commit("setLocationFilter", filter);
+            commit("setFilter", { type, filter });
         }
 
         commit("filterCharacters");
@@ -199,6 +131,10 @@ const actions = {
 
     setSelectedFilter({ commit }, selected) {
         commit("setSelectedFilter", selected);
+    },
+
+    finishLoading({ commit }) {
+        commit("finishLoading");
     },
 };
 
@@ -232,62 +168,12 @@ const mutations = {
         });
     },
 
-    setStatusFilter(state, filter) {
-        state.filters.status.push(filter);
+    setFilter(state, { type, filter }) {
+        state.filters[type].push(filter);
     },
 
-    removeStatusFilter(state, filter) {
-        state.filters.status = state.filters.status.filter(
-            (element) => element !== filter
-        );
-    },
-
-    setSpeciesFilter(state, filter) {
-        state.filters.species.push(filter);
-    },
-
-    removeSpeciesFilter(state, filter) {
-        state.filters.species = state.filters.species.filter(
-            (element) => element !== filter
-        );
-    },
-
-    setGenderFilter(state, filter) {
-        state.filters.gender.push(filter);
-    },
-
-    removeGenderFilter(state, filter) {
-        state.filters.gender = state.filters.gender.filter(
-            (element) => element !== filter
-        );
-    },
-
-    setOriginFilter(state, filter) {
-        state.filters.origin.push(filter);
-    },
-
-    removeOriginFilter(state, filter) {
-        state.filters.origin = state.filters.origin.filter(
-            (element) => element !== filter
-        );
-    },
-
-    setLocationFilter(state, filter) {
-        state.filters.location.push(filter);
-    },
-
-    removeLocationFilter(state, filter) {
-        state.filters.location = state.filters.location.filter(
-            (element) => element !== filter
-        );
-    },
-
-    setTypeFilter(state, filter) {
-        state.filters.type.push(filter);
-    },
-
-    removeTypeFilter(state, filter) {
-        state.filters.type = state.filters.type.filter(
+    removeFilter(state, { type, filter }) {
+        state.filters[type] = state.filters[type].filter(
             (element) => element !== filter
         );
     },
