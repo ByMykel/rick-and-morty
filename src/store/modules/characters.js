@@ -123,6 +123,10 @@ const actions = {
     setSelectedFilter({ commit }, selected) {
         commit("setSelectedFilter", selected);
     },
+
+    loadItems({ commit }) {
+        commit("loadItems");
+    },
 };
 
 const mutations = {
