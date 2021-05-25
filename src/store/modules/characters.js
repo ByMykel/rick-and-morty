@@ -61,7 +61,7 @@ const actions = {
         await dispatch("getAllEpisodes");
         commit("loadAllCharactersToFiltered");
         commit("loadItems");
-        dispatch("finishLoading");
+        commit("finishLoading");
     },
 
     async getAllCharacters({ commit, dispatch }, page = 1) {
@@ -122,10 +122,6 @@ const actions = {
 
     setSelectedFilter({ commit }, selected) {
         commit("setSelectedFilter", selected);
-    },
-
-    finishLoading({ commit }) {
-        commit("finishLoading");
     },
 };
 
