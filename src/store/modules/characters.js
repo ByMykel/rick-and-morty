@@ -55,10 +55,12 @@ const getters = {
 };
 
 const actions = {
-    async loadData({ dispatch }) {
+    async loadData({ commit, dispatch }) {
         await dispatch("getAllCharacters");
         await dispatch("getAllLocations");
         await dispatch("getAllEpisodes");
+        commit("loadAllCharactersToFiltered");
+        commit("loadItems");
         dispatch("finishLoading");
     },
 
@@ -71,9 +73,6 @@ const actions = {
 
         if (data.data.info.next) {
             await dispatch("getAllCharacters", ++page);
-        } else {
-            commit("filterCharacters");
-            commit("loadItems");
         }
     },
 
@@ -101,10 +100,6 @@ const actions = {
         }
     },
 
-    filterCharacters({ commit }) {
-        commit("filterCharacters");
-    },
-
     setFilter({ commit, state }, { type, filter }) {
         commit("resetData");
 
@@ -122,10 +117,6 @@ const actions = {
         commit("resetData");
         commit("setNameFilter", name);
         commit("filterCharacters");
-        commit("loadItems");
-    },
-
-    loadItems({ commit }) {
         commit("loadItems");
     },
 
@@ -180,6 +171,10 @@ const mutations = {
 
     setNameFilter(state, name) {
         state.filters.name = name;
+    },
+
+    loadAllCharactersToFiltered(state) {
+        state.filtered = state.all;
     },
 
     loadItems(state) {
