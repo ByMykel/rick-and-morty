@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="w-full overflow-auto">
         <filter-menu
             v-show="selected === 0"
             name="Status"
