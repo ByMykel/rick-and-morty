@@ -174,7 +174,7 @@ const mutations = {
     },
 
     loadAllCharactersToFiltered(state) {
-        state.filtered = state.all;
+        state.filtered = state.all.slice();
     },
 
     loadItems(state) {
