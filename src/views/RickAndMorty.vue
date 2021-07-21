@@ -1,22 +1,13 @@
 <template>
     <div class="py-5 pb-12">
-        <transition
-            enter-active-class="transition ease-out duration-300"
-            leave-active-class="transition ease-in duration-75"
-            enter-class="transform opacity-0 -translate-y-32"
-            enter-to-class="transform opacity-100 translate-y-0"
-            leave-class="transform opacity-100 translate-y-0"
-            leave-to-class="transform opacity-0 -translate-y-32"
+        <modal-character
+            :showing="showModal"
+            :showClose="true"
+            :backgroundClose="true"
+            :character="selectedCharacter"
+            @close="showModal = false"
         >
-            <modal-character
-                :showing="showModal"
-                :showClose="true"
-                :backgroundClose="true"
-                :character="selectedCharacter"
-                @close="showModal = false"
-            >
-            </modal-character>
-        </transition>
+        </modal-character>
 
         <search-bar
             @fetch-data="name = $event"
