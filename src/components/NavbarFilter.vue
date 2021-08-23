@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg-white border-b border-gray-200">
         <navbar-filter-item
             v-for="(item, index) in [
                 'Status',

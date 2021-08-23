@@ -14,11 +14,14 @@
             @toggle-filters="showFilters = !showFilters"
         ></search-bar>
 
-        <search-options v-show="showFilters"></search-options>
+        <search-options
+            v-show="showFilters"
+            @close-filtes="showFilters = false"
+        ></search-options>
 
         <div
             v-if="loading"
-            class="mt-10 w-full flex flex-col items-center justify-center"
+            class="flex flex-col items-center justify-center w-full mt-10"
         >
             <svg
                 class="w-7 h-7 animate-spin"
@@ -42,15 +45,9 @@
             </svg>
         </div>
 
-        <div v-else class="mt-3 max-w-6xl mx-auto sm:px-6 lg:px-8">
+        <div v-else class="max-w-6xl mx-auto mt-3 sm:px-6 lg:px-8">
             <div
-                class="
-                    grid grid-cols-2
-                    sm:grid-cols-3
-                    md:grid-cols-4
-                    lg:grid-cols-5
-                    gap-2
-                "
+                class="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
             >
                 <card-character
                     v-for="character in items"
@@ -117,6 +114,15 @@ export default {
                     .querySelector("body")
                     .classList.remove("overflow-hidden");
             }
+        },
+
+        showFilters(value) {
+            if (value) {
+                document.querySelector("body").classList.add("overflow-hidden");
+                return;
+            }
+            document.querySelector("body").classList.remove("overflow-hidden");
+            return;
         },
     },
 

@@ -1,12 +1,5 @@
 <template>
-    <div
-        class="bg-white w-full h-full p-2 overflow-x-hidden cursor-pointer"
-    >
-        <input
-            v-model="searchText"
-            type="text"
-            class="w-full mb-2 p-1 rounded-md"
-        />
+    <div class="w-full h-full p-2 overflow-x-hidden bg-white cursor-pointer">
         <div
             v-for="(item, index) in filteredOptions"
             :key="name + index"
@@ -22,7 +15,7 @@
             <input
                 type="checkbox"
                 :checked="selected.includes(item)"
-                class="border-gray-400 rounded ml-1 mr-2"
+                class="ml-1 mr-2 border-gray-400 rounded"
             />
             <span class="text-black">
                 {{ item ? item : "None" }}
@@ -38,12 +31,12 @@ export default {
     props: {
         name: String,
         options: Array,
+        searchText: String,
     },
 
     data() {
         return {
             selected: [],
-            searchText: "",
         };
     },
 

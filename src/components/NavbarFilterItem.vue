@@ -1,11 +1,11 @@
 <template>
     <div
-        class="hover:bg-gray-200 rounded px-2 mb-0.5 cursor-pointer flex justify-between"
-        :class="{ 'bg-gray-200': selected === index }"
+        class="hover:bg-gray-100 px-2 mb-0.5 cursor-pointer flex justify-between"
+        :class="{ 'bg-gray-100': selected === index }"
         @click="setSelectedFilter(index)"
     >
-        <span class="font-medium">{{ name }}</span>
-        <span class="text-sm flex items-center">
+        <span class="font-medium text-gray-700">{{ name }}</span>
+        <span class="flex items-center text-sm">
             {{ filterCount(name) ? filterCount(name) : "" }}
         </span>
     </div>
