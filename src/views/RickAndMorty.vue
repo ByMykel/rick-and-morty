@@ -15,7 +15,7 @@
         ></search-bar>
 
         <search-options
-            v-show="showFilters"
+            :show="showFilters"
             @close-filtes="showFilters = false"
         ></search-options>
 

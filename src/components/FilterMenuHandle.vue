@@ -45,7 +45,7 @@ import { mapState, mapGetters } from "vuex";
 import FilterMenu from "./FilterMenu.vue";
 
 export default {
-    name: "SearchFilter",
+    name: "FilterMenuHandle",
 
     props: {
         searchText: String,
