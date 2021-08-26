@@ -1,12 +1,15 @@
 <template>
     <transition
+        enter-active-class="duration-200 ease-in-out"
+        enter-class="opacity-0"
+        enter-to-class="opacity-100"
         leave-active-class="transition duration-200 ease-in"
         leave-class="opacity-100"
         leave-to-class="opacity-0"
     >
         <div
             v-show="show"
-            class="fixed inset-0 z-50 flex justify-end overflow-hidden bg-black bg-opacity-75 "
+            class="fixed inset-0 z-50 flex justify-end overflow-hidden bg-black bg-opacity-40"
         >
             <transition
                 enter-active-class="transition duration-500 ease-in-out transform"

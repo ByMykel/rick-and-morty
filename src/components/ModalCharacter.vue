@@ -1,56 +1,44 @@
 <template>
     <transition
-        enter-active-class="transition ease-out duration-300"
-        leave-active-class="transition ease-in duration-100"
-        enter-class="transform opacity-0 -translate-y-32"
-        enter-to-class="transform opacity-100 translate-y-0"
-        leave-class="transform opacity-100 translate-y-0"
-        leave-to-class="transform opacity-0 -translate-y-32"
+        enter-active-class="duration-200 ease-in-out"
+        enter-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="duration-200 ease-in"
+        leave-class="opacity-100"
+        leave-to-class="opacity-0"
     >
         <div
             v-show="showing"
-            :class="{ 'bg-black bg-opacity-40 duration-500': bgColorDelay }"
-            class="
-                fixed
-                inset-0
-                w-full
-                h-screen
-                flex
-                items-center
-                justify-center
-                z-50
-            "
+            class="fixed inset-0 z-50 flex items-center justify-center w-full h-screen bg-black bg-opacity-40"
             @click.self="closeIfShown"
         >
-            <div
-                class="
-                    relative
-                    md:h-4/5
-                    h-5/6
-                    max-h-5/6
-                    md:w-2/3
-                    w-11/12
-                    bg-gray-200
-                    shadow-lg
-                    rounded-lg
-                    pt-10
-                    flex
-                "
+            <transition
+                enter-active-class="transition duration-300 ease-out"
+                leave-active-class="transition duration-100 ease-in"
+                enter-class="transform -translate-y-32 opacity-0"
+                enter-to-class="transform translate-y-0 opacity-100"
+                leave-class="transform translate-y-0 opacity-100"
+                leave-to-class="transform -translate-y-32 opacity-0"
             >
-                <button
-                    v-if="showClose"
-                    class="absolute top-1 right-0 my-1 mx-2"
-                    @click.prevent="close"
+                <div
+                    v-show="showing"
+                    class="relative flex w-11/12 pt-10 bg-gray-200 rounded-lg shadow-lg md:h-4/5 h-5/6 max-h-5/6 md:w-2/3"
                 >
-                    <icons class="text-black" icon="cross"></icons>
-                </button>
+                    <button
+                        v-if="showClose"
+                        class="absolute right-0 mx-2 my-1 top-1"
+                        @click.prevent="close"
+                    >
+                        <icons class="text-black" icon="cross"></icons>
+                    </button>
 
-                <div class="overflow-auto max-h-screen w-full no-scrollbar">
-                    <character-details
-                        :character="character"
-                    ></character-details>
+                    <div class="w-full max-h-screen overflow-auto no-scrollbar">
+                        <character-details
+                            :character="character"
+                        ></character-details>
+                    </div>
                 </div>
-            </div>
+            </transition>
         </div>
     </transition>
 </template>
@@ -86,24 +74,13 @@ export default {
         },
     },
 
-    data() {
-        return {
-            bgColorDelay: false,
-        };
-    },
-
     watch: {
         showing(value) {
             if (value) {
-                setTimeout(() => {
-                    this.bgColorDelay = true;
-                }, 300);
                 return document
                     .querySelector("body")
                     .classList.add("overflow-hidden");
             }
-
-            this.bgColorDelay = false;
 
             return document
                 .querySelector("body")
