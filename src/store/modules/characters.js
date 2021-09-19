@@ -30,6 +30,7 @@ const state = () => ({
     locations: [{ name: "unknown" }],
     episodes: [],
     loading: true,
+    loading_message: "",
 });
 
 const getters = {
@@ -56,12 +57,21 @@ const getters = {
 
 const actions = {
     async loadData({ commit, dispatch }) {
+        commit("setLoadingMessage", "Loading characters");
         await dispatch("getAllCharacters");
+
+        commit("setLoadingMessage", "Loading locations");
         await dispatch("getAllLocations");
+
+        commit("setLoadingMessage", "Loading episodes");
         await dispatch("getAllEpisodes");
+
+        commit("setLoadingMessage", "Loading final data");
         commit("loadAllCharactersToFiltered");
         commit("loadItems");
         commit("finishLoading");
+
+        commit("setLoadingMessage", "");
     },
 
     async getAllCharacters({ commit, dispatch }, page = 1) {
@@ -215,6 +225,10 @@ const mutations = {
 
     setSelectedFilter(state, selected) {
         state.filters.selected = selected;
+    },
+
+    setLoadingMessage(state, message) {
+        state.loading_message = message;
     },
 };
 
