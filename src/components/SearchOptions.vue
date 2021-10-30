@@ -10,6 +10,7 @@
         <div
             v-show="show"
             class="fixed inset-0 z-50 flex justify-end overflow-hidden bg-black bg-opacity-40"
+            @click.self="$emit('close-filtes')"
         >
             <transition
                 enter-active-class="transition duration-500 ease-in-out transform"
@@ -25,9 +26,9 @@
                     style="max-width: 22rem"
                 >
                     <div
-                        class="flex items-center justify-between px-2 my-1 text-lg font-semibold "
+                        class="flex items-center justify-between px-2 my-1"
                     >
-                        <span>Filter options</span>
+                        <span class="text-xl font-semibold">Filter options</span>
                         <button @click="$emit('close-filtes')">
                             <icons icon="cross"></icons>
                         </button>
