@@ -1,9 +1,9 @@
 <template>
-    <div class="w-full h-full p-2 overflow-x-hidden bg-white cursor-pointer">
+    <div class="w-full h-full p-2 overflow-x-hidden bg-white">
         <div
             v-for="(item, index) in filteredOptions"
             :key="name + index"
-            class="px-2 py-0.5 mb-1 rounded hover:bg-gray-200 flex items-center"
+            class="px-2 py-0.5 mb-1 rounded hover:bg-gray-200 flex items-center cursor-pointer"
             @click="
                 handleSelected(item),
                     $store.dispatch(`characters/setFilter`, {
