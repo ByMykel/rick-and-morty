@@ -1,6 +1,11 @@
 <template>
     <div>
         <character-attribute
+            name="Name"
+            :value="character.name"
+        ></character-attribute>
+
+        <character-attribute
             name="Status"
             :value="character.status"
         ></character-attribute>

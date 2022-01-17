@@ -22,14 +22,14 @@
             >
                 <div
                     v-show="showing"
-                    class="relative flex w-11/12 pt-10 bg-gray-200 rounded-lg shadow-lg md:h-4/5 h-5/6 max-h-5/6 md:w-2/3"
+                    class="relative flex w-full mx-2 bg-gray-200 rounded-lg shadow-lg sm:mx-2 md:h-4/5 h-5/6 max-h-5/6 md:w-2/3"
                 >
                     <button
                         v-if="showClose"
-                        class="absolute right-0 mx-2 my-1 top-1"
+                        class="absolute mx-2 my-1 -right-3 -top-8"
                         @click.prevent="close"
                     >
-                        <icons class="text-black" icon="cross"></icons>
+                        <icons class="text-white" icon="cross"></icons>
                     </button>
 
                     <div class="w-full max-h-screen overflow-auto no-scrollbar">
